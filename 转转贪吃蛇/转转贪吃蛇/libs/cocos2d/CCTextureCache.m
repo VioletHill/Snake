@@ -270,7 +270,7 @@ static CCTextureCache *sharedTextureCache;
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	CCFileUtils *fileUtils = [CCFileUtils   sharedFileUtils];
 	path = [fileUtils standarizePath:path];
 
 	__block CCTexture2D * tex = nil;

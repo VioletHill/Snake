@@ -8,19 +8,20 @@
 
 #import "StartLayer.h"
 #import "InforLayer.h"
-
+#import "ModelController.h"
+#import "GameLayer.h"
 
 @interface StartLayer ()
 
-@property (nonatomic,strong) CCMenuItemImage* startItem;
-@property (nonatomic,strong) CCMenuItemImage* inforItem;
-@property (nonatomic,strong) CCMenuItemImage* scoreItem;
-@property (nonatomic,strong) CCMenu* menu;
-@property (nonatomic,strong) CCSprite* title;
+@property (nonatomic,assign) CCMenuItemImage* startItem;
+@property (nonatomic,assign) CCMenuItemImage* inforItem;
+@property (nonatomic,assign) CCMenuItemImage* scoreItem;
+@property (nonatomic,assign) CCMenu* menu;
+@property (nonatomic,assign) CCSprite* title;
 
-@property (nonatomic,strong) CCMenuItemImage* gravityModelItem;
-@property (nonatomic,strong) CCMenuItemImage* rockerModelItem;
-@property (nonatomic,strong) CCMenuItemImage* returnItem;
+@property (nonatomic,assign) CCMenuItemImage* gravityModelItem;
+@property (nonatomic,assign) CCMenuItemImage* rockerModelItem;
+@property (nonatomic,assign) CCMenuItemImage* returnItem;
 
 @end
 
@@ -341,7 +342,7 @@
 -(void) addMenu
 {
     [self menu];
-    [self performSelector:@selector(moveStartMenuIn) withObject:self afterDelay:2];
+    [self performSelector:@selector(moveStartMenuIn) withObject:self afterDelay:0.1];
 }
 
 
@@ -372,7 +373,9 @@
 
 -(void)rockerMenu:(CCNode*)pSender
 {
-    
+    [ModelController sharedModelController].operateModel=kRocker;
+    CCScene* scene = [GameLayer node];
+    [[CCDirector sharedDirector] pushScene:scene];
 }
 
 -(void)returnMenu:(CCNode*)pSender

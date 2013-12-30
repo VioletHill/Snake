@@ -12,10 +12,10 @@
 @interface InforLayer()
 
 @property (nonatomic, strong) NSMutableArray* inforSprite;
-@property (nonatomic, strong) CCMenuItemImage* backItem;
-@property (nonatomic, strong) CCMenuItemImage* nextInfor;
-@property (nonatomic, strong) CCMenuItemImage* lastInfor;
-@property (nonatomic, strong) CCMenu* menu;
+@property (nonatomic, assign) CCMenuItemImage* backItem;
+@property (nonatomic, assign) CCMenuItemImage* nextInfor;
+@property (nonatomic, assign) CCMenuItemImage* lastInfor;
+@property (nonatomic, assign) CCMenu* menu;
 
 @end
 
@@ -58,7 +58,7 @@
 {
     if (_inforSprite==nil)
     {
-        _inforSprite=[[NSMutableArray alloc] init];
+        _inforSprite=[[[NSMutableArray alloc] init] autorelease];
     }
     return _inforSprite;
 }
@@ -170,6 +170,11 @@
     currentIndex=0;
     isInforMoving=NO;
     self.lastInfor.visible=NO;
+}
+
+-(void)onExit
+{
+    [super onExit];
 }
 
 @end

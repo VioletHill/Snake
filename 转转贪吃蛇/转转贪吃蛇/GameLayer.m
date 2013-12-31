@@ -55,7 +55,7 @@
         [self addChild:snake];
         [self addFood];
         [self scheduleUpdate];
-       // [self schedule:@selector(time:) interval:1];
+        
     }
     return self;
 }
@@ -98,8 +98,23 @@
     return isCollision(snakePosition, foodPosition);
 }
 
+-(BOOL) isCollision
+{
+    CGPoint snakePosition=[snake getHeadPosition];
+    if (snakePosition.x<=minDis()/2) return YES;
+    if (snakePosition.x>=winSize.width-minDis()/2) return YES;
+    if (snakePosition.y<=minDis()/2) return YES;
+    if (snakePosition.y>=winSize.height-minDis()/2) return YES;
+    return [snake isEatSelf];
+}
+
 -(void)update:(ccTime)delta
 {
+    if ([self isCollision])
+    {
+        [self endGame];
+        return ;
+    }
     if ([self isEatFood])
     {
         [self eatFood];
@@ -107,11 +122,9 @@
     [snake move:rocker.getDirctionVector];
 }
 
--(void)time:(ccTime)delte
+-(void) endGame
 {
-    [snake move:rocker.getDirctionVector];
-
+    [self unscheduleUpdate];
 }
-
 
 @end

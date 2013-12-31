@@ -18,4 +18,6 @@
 
 -(CGPoint) getHeadPosition;
 
+-(BOOL) isEatSelf;
+
 @end

@@ -30,7 +30,6 @@
 		2485751B186C36F200452E37 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2485751A186C36F200452E37 /* GameLayer.m */; };
 		24857521186C3E1F00452E37 /* Snake.m in Sources */ = {isa = PBXBuildFile; fileRef = 24857520186C3E1F00452E37 /* Snake.m */; };
 		24857524186C489C00452E37 /* snakeHead-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24857523186C489C00452E37 /* snakeHead-hd.png */; };
-		24857527186C4DDB00452E37 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24857526186C4DDB00452E37 /* ModelController.m */; };
 		2485752A186C4F7F00452E37 /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 24857529186C4F7F00452E37 /* Food.m */; };
 		2485752C186C560300452E37 /* gameLayerBg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2485752B186C560300452E37 /* gameLayerBg-hd.png */; };
 		24857530186C572700452E37 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 2485752F186C572700452E37 /* Model.m */; };
@@ -208,8 +207,6 @@
 		2485751F186C3E1F00452E37 /* Snake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snake.h; sourceTree = "<group>"; };
 		24857520186C3E1F00452E37 /* Snake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snake.m; sourceTree = "<group>"; };
 		24857523186C489C00452E37 /* snakeHead-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snakeHead-hd.png"; sourceTree = "<group>"; };
-		24857525186C4DDB00452E37 /* ModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
-		24857526186C4DDB00452E37 /* ModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		24857528186C4F7F00452E37 /* Food.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Food.h; sourceTree = "<group>"; };
 		24857529186C4F7F00452E37 /* Food.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Food.m; sourceTree = "<group>"; };
 		2485752B186C560300452E37 /* gameLayerBg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameLayerBg-hd.png"; sourceTree = "<group>"; };
@@ -622,8 +619,6 @@
 				2485752E186C572700452E37 /* Model.h */,
 				2485752F186C572700452E37 /* Model.m */,
 				2485750E186BE3F500452E37 /* Rocker */,
-				24857525186C4DDB00452E37 /* ModelController.h */,
-				24857526186C4DDB00452E37 /* ModelController.m */,
 			);
 			name = ModelController;
 			sourceTree = "<group>";
@@ -1223,7 +1218,6 @@
 				24D485FE186962DE00E27AED /* CCTMXXMLParser.m in Sources */,
 				24D48695186962DF00E27AED /* ray2.c in Sources */,
 				24D48630186962DE00E27AED /* base64.c in Sources */,
-				24857527186C4DDB00452E37 /* ModelController.m in Sources */,
 				24D48553186962DD00E27AED /* CCActionTween.m in Sources */,
 				24D4858A186962DD00E27AED /* CCLabelBMFont.m in Sources */,
 				24D48637186962DE00E27AED /* ccCArray.m in Sources */,

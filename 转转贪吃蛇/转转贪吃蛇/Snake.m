@@ -48,12 +48,11 @@ const float maxAngel=3;
     if (self=[super init])
     {
         CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
-        speed=3;
+        speed=1;
         head.position=CGPointMake(0, 0);
         [self.body addObject:head];
         [self addChild:head];
         
-        [self addBody];
         [self addBody];
     }
     return self;
@@ -81,7 +80,6 @@ const float maxAngel=3;
 {
     CCSprite* body=[CCSprite spriteWithFile:@"body.png"];
     CCSprite* lastBody=[self.body lastObject];
-    [body setRotation:lastBody.rotation];
     [body setPosition:lastBody.position];
     [self.body addObject:body];
     [self addChild:body];
@@ -202,6 +200,17 @@ const float maxAngel=3;
 {
     CCSprite* head=[self.body firstObject];
     return CGPointMake(head.position.x+self.position.x, head.position.y+self.position.y);
+}
+
+-(BOOL) isEatSelf
+{
+    CCSprite* head=[self.body firstObject];
+    for (int i=3; i<self.body.count; i++)
+    {
+        CCSprite* body=[self.body objectAtIndex:i];
+        if (isCollision(head.position, body.position)) return YES;
+    }
+    return NO;
 }
 
 -(void)onExit

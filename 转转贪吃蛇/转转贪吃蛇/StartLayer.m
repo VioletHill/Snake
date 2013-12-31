@@ -8,7 +8,6 @@
 
 #import "StartLayer.h"
 #import "InforLayer.h"
-#import "ModelController.h"
 #import "GameLayer.h"
 
 @interface StartLayer ()
@@ -373,7 +372,6 @@
 
 -(void)rockerMenu:(CCNode*)pSender
 {
-    [ModelController sharedModelController].operateModel=kRocker;
     CCScene* scene = [GameLayer node];
     [[CCDirector sharedDirector] pushScene:scene];
 }

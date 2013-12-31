@@ -13,7 +13,7 @@ typedef NS_ENUM(int, GameModel)
 {
     kRocker=0,
     kGravity=1,
-}GameModel;
+};
 
 @interface Model : CCLayer<CCTouchOneByOneDelegate>
 

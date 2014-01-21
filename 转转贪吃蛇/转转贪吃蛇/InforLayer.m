@@ -7,7 +7,7 @@
 //
 
 #import "InforLayer.h"
-
+#import "StartLayer.h"
 
 @interface InforLayer()
 
@@ -142,7 +142,7 @@
 
 -(void) backMenu:(CCNode*)pSender
 {
-    [[CCDirector sharedDirector] popScene];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:[StartLayer node]]];
 }
 
 

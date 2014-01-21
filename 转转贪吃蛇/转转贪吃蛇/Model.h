@@ -17,6 +17,11 @@ typedef NS_ENUM(int, GameModel)
 
 @interface Model : CCLayer<CCTouchOneByOneDelegate>
 
++(void) setGameModel:(GameModel*)model;
++(GameModel*) getGameModel;
+
++(Model*)instanceTypeWithGameModel:(GameModel)model;
+
 -(Vector) getDirctionVector;
 
 @end

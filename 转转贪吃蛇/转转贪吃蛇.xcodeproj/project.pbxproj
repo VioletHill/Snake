@@ -24,6 +24,14 @@
 		24414C441869BB2C00B2BBDD /* nextInfor-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24414C411869BB2C00B2BBDD /* nextInfor-hd.png */; };
 		24414C451869BB2C00B2BBDD /* lastInfor-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24414C421869BB2C00B2BBDD /* lastInfor-hd.png */; };
 		24414C471869D3DF00B2BBDD /* beginBackground-ipadhd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 24414C461869D3DF00B2BBDD /* beginBackground-ipadhd.jpg */; };
+		24528007187290D800220AD5 /* endBackground-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24528006187290D800220AD5 /* endBackground-hd.png */; };
+		245280091872931400220AD5 /* pauseButton-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 245280081872931400220AD5 /* pauseButton-hd.png */; };
+		2452800C1872B08500220AD5 /* Gravity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2452800B1872B08500220AD5 /* Gravity.m */; };
+		2452800F1872B7CF00220AD5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2452800E1872B7CF00220AD5 /* CoreMotion.framework */; };
+		245280131872EE2B00220AD5 /* pauseBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 245280121872EE2B00220AD5 /* pauseBackground.png */; };
+		245280171872EE6500220AD5 /* pauseBackHome-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 245280141872EE6500220AD5 /* pauseBackHome-hd.png */; };
+		245280181872EE6500220AD5 /* pauseContinue-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 245280151872EE6500220AD5 /* pauseContinue-hd.png */; };
+		245280191872EE6500220AD5 /* pauseNewGame-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 245280161872EE6500220AD5 /* pauseNewGame-hd.png */; };
 		24857511186BE40E00452E37 /* Rocker.m in Sources */ = {isa = PBXBuildFile; fileRef = 24857510186BE40E00452E37 /* Rocker.m */; };
 		24857516186BE52A00452E37 /* rockerBg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24857514186BE52A00452E37 /* rockerBg-hd.png */; };
 		24857517186BE52A00452E37 /* rockerPoint-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24857515186BE52A00452E37 /* rockerPoint-hd.png */; };
@@ -198,6 +206,15 @@
 		24414C411869BB2C00B2BBDD /* nextInfor-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nextInfor-hd.png"; sourceTree = "<group>"; };
 		24414C421869BB2C00B2BBDD /* lastInfor-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lastInfor-hd.png"; sourceTree = "<group>"; };
 		24414C461869D3DF00B2BBDD /* beginBackground-ipadhd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "beginBackground-ipadhd.jpg"; sourceTree = "<group>"; };
+		24528006187290D800220AD5 /* endBackground-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "endBackground-hd.png"; sourceTree = "<group>"; };
+		245280081872931400220AD5 /* pauseButton-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseButton-hd.png"; sourceTree = "<group>"; };
+		2452800A1872B08500220AD5 /* Gravity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gravity.h; sourceTree = "<group>"; };
+		2452800B1872B08500220AD5 /* Gravity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gravity.m; sourceTree = "<group>"; };
+		2452800E1872B7CF00220AD5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		245280121872EE2B00220AD5 /* pauseBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseBackground.png; sourceTree = "<group>"; };
+		245280141872EE6500220AD5 /* pauseBackHome-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseBackHome-hd.png"; sourceTree = "<group>"; };
+		245280151872EE6500220AD5 /* pauseContinue-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseContinue-hd.png"; sourceTree = "<group>"; };
+		245280161872EE6500220AD5 /* pauseNewGame-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseNewGame-hd.png"; sourceTree = "<group>"; };
 		2485750F186BE40E00452E37 /* Rocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rocker.h; sourceTree = "<group>"; };
 		24857510186BE40E00452E37 /* Rocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rocker.m; sourceTree = "<group>"; };
 		24857514186BE52A00452E37 /* rockerBg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rockerBg-hd.png"; sourceTree = "<group>"; };
@@ -509,6 +526,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2452800F1872B7CF00220AD5 /* CoreMotion.framework in Frameworks */,
 				24D48503186962DD00E27AED /* OpenAL.framework in Frameworks */,
 				24D48509186962DD00E27AED /* UIKit.framework in Frameworks */,
 				24D484FF186962DD00E27AED /* QuartzCore.framework in Frameworks */,
@@ -561,6 +579,27 @@
 			name = InforLayer;
 			sourceTree = "<group>";
 		};
+		2452800D1872B0A000220AD5 /* Gravity */ = {
+			isa = PBXGroup;
+			children = (
+				2452800A1872B08500220AD5 /* Gravity.h */,
+				2452800B1872B08500220AD5 /* Gravity.m */,
+			);
+			name = Gravity;
+			sourceTree = "<group>";
+		};
+		2452801A1872EE6A00220AD5 /* Pause */ = {
+			isa = PBXGroup;
+			children = (
+				245280141872EE6500220AD5 /* pauseBackHome-hd.png */,
+				245280151872EE6500220AD5 /* pauseContinue-hd.png */,
+				245280161872EE6500220AD5 /* pauseNewGame-hd.png */,
+				245280121872EE2B00220AD5 /* pauseBackground.png */,
+				245280081872931400220AD5 /* pauseButton-hd.png */,
+			);
+			name = Pause;
+			sourceTree = "<group>";
+		};
 		2485750E186BE3F500452E37 /* Rocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,7 +612,7 @@
 		24857512186BE50100452E37 /* GameLayer */ = {
 			isa = PBXGroup;
 			children = (
-				2485752D186C570200452E37 /* ModelController */,
+				2485752D186C570200452E37 /* GameModel */,
 				24857519186C36F200452E37 /* GameLayer.h */,
 				2485751A186C36F200452E37 /* GameLayer.m */,
 				2485751F186C3E1F00452E37 /* Snake.h */,
@@ -587,6 +626,8 @@
 		24857513186BE51A00452E37 /* GameLayer */ = {
 			isa = PBXGroup;
 			children = (
+				2452801A1872EE6A00220AD5 /* Pause */,
+				24528006187290D800220AD5 /* endBackground-hd.png */,
 				2485752B186C560300452E37 /* gameLayerBg-hd.png */,
 				243D90C218715D0500A846F5 /* Food */,
 				24857522186C489200452E37 /* Snake */,
@@ -613,14 +654,15 @@
 			name = Snake;
 			sourceTree = "<group>";
 		};
-		2485752D186C570200452E37 /* ModelController */ = {
+		2485752D186C570200452E37 /* GameModel */ = {
 			isa = PBXGroup;
 			children = (
 				2485752E186C572700452E37 /* Model.h */,
 				2485752F186C572700452E37 /* Model.m */,
+				2452800D1872B0A000220AD5 /* Gravity */,
 				2485750E186BE3F500452E37 /* Rocker */,
 			);
-			name = ModelController;
+			name = GameModel;
 			sourceTree = "<group>";
 		};
 		24D484F2186962DD00E27AED = {
@@ -643,6 +685,7 @@
 		24D484FD186962DD00E27AED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2452800E1872B7CF00220AD5 /* CoreMotion.framework */,
 				24D484FE186962DD00E27AED /* QuartzCore.framework */,
 				24D48500186962DD00E27AED /* OpenGLES.framework */,
 				24D48502186962DD00E27AED /* OpenAL.framework */,
@@ -1162,16 +1205,20 @@
 				24414C3C1869B40800B2BBDD /* infor6.jpg in Resources */,
 				24D486BA1869658A00E27AED /* beginBackground-hd.jpg in Resources */,
 				24D48683186962DF00E27AED /* ChangeLog in Resources */,
+				245280171872EE6500220AD5 /* pauseBackHome-hd.png in Resources */,
 				24857524186C489C00452E37 /* snakeHead-hd.png in Resources */,
 				24D48517186962DD00E27AED /* Default@2x.png in Resources */,
 				243D90BE18715D0000A846F5 /* food1-hd.png in Resources */,
 				24D486C8186999EC00E27AED /* gravityModel-hd.png in Resources */,
+				245280131872EE2B00220AD5 /* pauseBackground.png in Resources */,
 				24414C371869B40800B2BBDD /* infor1.jpg in Resources */,
+				245280091872931400220AD5 /* pauseButton-hd.png in Resources */,
 				24414C441869BB2C00B2BBDD /* nextInfor-hd.png in Resources */,
 				24D48521186962DD00E27AED /* Icon-Small.png in Resources */,
 				24D4851D186962DD00E27AED /* Icon-72.png in Resources */,
 				24414C431869BB2C00B2BBDD /* backStart-hd.png in Resources */,
 				24D486C9186999EC00E27AED /* rockerModel-hd.png in Resources */,
+				24528007187290D800220AD5 /* endBackground-hd.png in Resources */,
 				24857516186BE52A00452E37 /* rockerBg-hd.png in Resources */,
 				24414C3A1869B40800B2BBDD /* infor4.jpg in Resources */,
 				24D486CB1869AB4B00E27AED /* return-hd.png in Resources */,
@@ -1188,7 +1235,9 @@
 				24D48523186962DD00E27AED /* Icon-Small@2x.png in Resources */,
 				24D4851B186962DD00E27AED /* Default-Landscape~ipad.png in Resources */,
 				243D90C018715D0000A846F5 /* food3-hd.png in Resources */,
+				245280191872EE6500220AD5 /* pauseNewGame-hd.png in Resources */,
 				243D90BF18715D0000A846F5 /* food2-hd.png in Resources */,
+				245280181872EE6500220AD5 /* pauseContinue-hd.png in Resources */,
 				24D486C31869901F00E27AED /* score-hd.png in Resources */,
 				2485752C186C560300452E37 /* gameLayerBg-hd.png in Resources */,
 				24D48519186962DD00E27AED /* Default-568h@2x.png in Resources */,
@@ -1309,6 +1358,7 @@
 				24D4863A186962DE00E27AED /* CCFileUtils.m in Sources */,
 				24D48627186962DE00E27AED /* CCEventDispatcher.m in Sources */,
 				24D485DD186962DE00E27AED /* CCSpriteBatchNode.m in Sources */,
+				2452800C1872B08500220AD5 /* Gravity.m in Sources */,
 				24D48566186962DD00E27AED /* CCConfiguration.m in Sources */,
 				24D485C2186962DE00E27AED /* CCScheduler.m in Sources */,
 				24D48612186962DE00E27AED /* CCDirectorIOS.m in Sources */,

@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import "IntroLayer.h"
+#import "GameLayer.h"
 
 @implementation MyNavigationController
 
@@ -144,13 +145,14 @@
 {
 	if( [navController_ visibleViewController] == director_ )
 		[director_ pause];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EnterBackgroundObserver" object:nil];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
-	if( [navController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_ && ![GameLayer isEnter])
 		[director_ resume];
 }
 
@@ -162,7 +164,7 @@
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if( [navController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_)
 		[director_ startAnimation];
 }
 

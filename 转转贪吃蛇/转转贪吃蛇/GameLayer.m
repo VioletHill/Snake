@@ -10,8 +10,13 @@
 #import "Snake.h"
 #import "Food.h"
 #import "Rocker.h"
+#import "StartLayer.h"
+#import <CoreMotion/CoreMotion.h>
 
 @interface GameLayer()
+
+@property (nonatomic,assign) CCMenuItemImage* pauseItem;
+@property (nonatomic,assign) CCLayer* pauseLayer;
 
 @end
 
@@ -20,9 +25,11 @@
     int score;
     CCSprite* food;
     Snake* snake;
-    Model* rocker;
+    Model* model;
     CGSize winSize;
 }
+
+static BOOL isEnter=NO;
 
 +(CCScene *) scene
 {
@@ -40,24 +47,50 @@
 }
 
 
-
 -(instancetype) init
 {
     if (self=[super init])
     {
         winSize=[[CCDirector sharedDirector] winSize];
         [self addBg];
-
-        [self addRocker];
+        [self addPause];
+        [self addModel];
         
-        snake=[Snake node];
-        snake.position=CGPointMake(winSize.width/2, winSize.height/2);
-        [self addChild:snake];
-        [self addFood];
-        [self scheduleUpdate];
-        
+//        snake=[Snake node];
+//        snake.position=CGPointMake(winSize.width/2, winSize.height/2);
+//        [self addChild:snake];
+//        [self addFood];
+        [self restart];
     }
     return self;
+}
+
+-(void)restart
+{
+    score=0;
+    
+    [food removeFromParent];
+    [snake removeFromParent];
+    
+    snake=[Snake node];
+    snake.position=CGPointMake(winSize.width/2, winSize.height/2);
+    [self addChild:snake];
+    [self addFood];
+    
+    if ([CCDirector sharedDirector].isPaused)
+    {
+        [self resumeGame:nil];
+    }
+}
+
+-(void)addPause
+{
+    self.pauseItem=[CCMenuItemImage itemWithNormalImage:@"pauseButton.png" selectedImage:@"pauseButton.png" target:self selector:@selector(pauseGame:)];
+    self.pauseItem.anchorPoint=CGPointZero;
+    self.pauseItem.position=CGPointZero;
+    CCMenu* menu= [CCMenu menuWithItems:self.pauseItem, nil];
+    menu.position=CGPointZero;
+    [self addChild:menu];
 }
 
 -(void)addBg
@@ -67,19 +100,25 @@
     [self addChild:sprite];
 }
 
--(void)addRocker
+-(void)addModel
 {
-    rocker=[Rocker node];
-    rocker.position=CGPointMake(winSize.width-rocker.contentSize.width, 100);
-    [self addChild:rocker];
-
+    model=[Model instanceTypeWithGameModel:[Model getGameModel]];
+    
+        model.position=CGPointMake(winSize.width-model.contentSize.width, 100);
+        [self addChild:model];
 }
 
 -(void)addFood
 {
     food=[[Food sharedFood] createFood];
-    int x=arc4random()% (int)winSize.width;
-    int y=arc4random()% (int)winSize.height;
+    int x;
+    int y;
+    while (1)
+    {
+        x=arc4random()% (int)(winSize.width-2*minDis()) +minDis();
+        y=arc4random()% (int)(winSize.height-2*minDis()) +minDis();
+        if (![snake isCollisionOnPosition:CGPointMake(x, y)]) break;
+    }
     [food setPosition:CGPointMake(x, y)];
     [self addChild:food];
 }
@@ -119,12 +158,101 @@
     {
         [self eatFood];
     }
-    [snake move:rocker.getDirctionVector];
+    [snake move:model.getDirctionVector];
+}
+
+
+#pragma mark - pause
+
+-(CCLayer*) pauseLayer
+{
+    if (_pauseLayer==nil)
+    {
+        _pauseLayer=[CCLayer node];
+        CCSprite* bg=[CCSprite spriteWithFile:@"pauseBackground.png"];
+        bg.position=CGPointMake(winSize.width/2, winSize.height/2);
+        
+        CCMenuItemImage* returnHome=[CCMenuItemImage itemWithNormalImage:@"pauseBackHome.png" selectedImage:@"pauseBackHome.png" target:self selector:@selector(returnHome:)];
+        returnHome.position=CGPointMake(50, 200);
+        
+        CCMenuItemImage* pauseNewGame=[CCMenuItemImage itemWithNormalImage:@"pauseNewGame.png" selectedImage:@"pauseNewGame.png" target:self selector:@selector(resumeNewGame:)];
+        pauseNewGame.position=CGPointMake(250, 200);
+        
+        CCMenuItemImage* resumeGame=[CCMenuItemImage itemWithNormalImage:@"pauseContinue.png" selectedImage:@"pauseContinue.png" target:self selector:@selector(resumeGame:)];
+        resumeGame.position=CGPointMake(500, 200);
+        
+        CCMenu* menu=[CCMenu menuWithItems:returnHome, pauseNewGame,resumeGame, nil];
+        menu.position=CGPointZero;
+        [_pauseLayer addChild:bg];
+        [_pauseLayer addChild:menu];
+        
+        [self addChild:_pauseLayer];
+        
+    }
+    return _pauseLayer;
+}
+
+-(void) returnHome:(id)sender
+{
+    CCScene* scene=[StartLayer node];
+    [self unscheduleUpdate];
+    [[CCDirector sharedDirector] resume];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+}
+
+-(void) resumeNewGame:(id)sender
+{
+    [self restart];
+}
+
+-(void) resumeGame:(id)sender
+{
+    [self.pauseLayer setVisible:NO];
+    [[CCDirector sharedDirector] resume];
+}
+
+-(void) pauseGame:(id)sender
+{
+    [[CCDirector sharedDirector] pause];
+    [self.pauseLayer setVisible:YES];
 }
 
 -(void) endGame
 {
     [self unscheduleUpdate];
+    [self addChild:[self endGameLayer]];
+}
+
+-(CCLayer*)endGameLayer
+{
+    CCLayer* endGameLayer=[CCLayer node];
+    
+    CCSprite* bg=[CCSprite spriteWithFile:@"endBackground.png"];
+     bg.position=CGPointMake(endGameLayer.contentSize.width/2, endGameLayer.contentSize.height/2);
+    [endGameLayer addChild:bg];
+    
+    return endGameLayer;
+}
+
++(BOOL) isEnter
+{
+    return isEnter;
+}
+
+-(void) onEnter
+{
+    [super onEnter];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame:) name:@"EnterBackgroundObserver" object:nil];
+    isEnter=YES;
+    [self scheduleUpdate];
+}
+
+-(void) onExit
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
+    isEnter=NO;
+    [super onExit];
 }
 
 @end

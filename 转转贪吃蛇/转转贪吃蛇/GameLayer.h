@@ -114,5 +114,6 @@ NS_INLINE BOOL isCollision(CGPoint a, CGPoint b)
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 
++(BOOL) isEnter;
 
 @end

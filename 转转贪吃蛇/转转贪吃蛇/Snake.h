@@ -20,4 +20,6 @@
 
 -(BOOL) isEatSelf;
 
+-(BOOL) isCollisionOnPosition:(CGPoint)p;
+
 @end

@@ -19,7 +19,7 @@
 
 +(Direction*) makeDirection:(Vector)v
 {
-    Direction* dir=[[Direction alloc] init];
+    Direction* dir=[[[Direction alloc] init] autorelease];
     dir.v=v;
     return dir;
 }
@@ -28,9 +28,9 @@
 
 @interface Snake()
 
-@property (nonatomic,strong) NSMutableArray* body;
+@property (nonatomic,retain) NSMutableArray* body;
 
-@property (nonatomic,strong) NSMutableArray* moveVector;
+@property (nonatomic,retain) NSMutableArray* moveVector;
 
 @end
 
@@ -40,6 +40,9 @@
     float speed;        //1 start 2 max
 }
 
+@synthesize body=_body;
+@synthesize moveVector=_moveVector;
+
 const float maxAngel=3;
 
 
@@ -47,8 +50,9 @@ const float maxAngel=3;
 {
     if (self=[super init])
     {
-        CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
         speed=1;
+        CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
+        head.zOrder=1;
         head.position=CGPointMake(0, 0);
         [self.body addObject:head];
         [self addChild:head];
@@ -84,7 +88,7 @@ const float maxAngel=3;
     [self.body addObject:body];
     [self addChild:body];
     
-    NSMutableArray* dir=[[NSMutableArray alloc] init];
+    NSMutableArray* dir=[[[NSMutableArray alloc] init] autorelease];
     [dir addObject:@(0)];
     [self.moveVector addObject:dir];
 }
@@ -209,6 +213,16 @@ const float maxAngel=3;
     {
         CCSprite* body=[self.body objectAtIndex:i];
         if (isCollision(head.position, body.position)) return YES;
+    }
+    return NO;
+}
+
+-(BOOL) isCollisionOnPosition:(CGPoint)p
+{
+    for (int i=0; i<self.body.count; i++)
+    {
+        CCSprite* body=[self.body objectAtIndex:i];
+        if (isCollision(CGPointMake(body.position.x+self.position.x, body.position.y+self.position.y), p)) return YES;
     }
     return NO;
 }

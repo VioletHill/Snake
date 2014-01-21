@@ -7,8 +7,28 @@
 //
 
 #import "Model.h"
+#import "Rocker.h"
+#import "Gravity.h"
 
 @implementation Model
+
++(Model*)instanceTypeWithGameModel:(GameModel)model
+{
+    if (model==kGravity) return [Gravity node];
+    else return [Rocker node];
+}
+
+static GameModel gameModel=kRocker;
+
++(void) setGameModel:(GameModel *)model
+{
+    gameModel=model;
+}
+
++(GameModel*)getGameModel
+{
+    return gameModel;
+}
 
 -(Vector) getDirctionVector
 {

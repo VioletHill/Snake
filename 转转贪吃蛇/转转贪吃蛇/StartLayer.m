@@ -9,6 +9,7 @@
 #import "StartLayer.h"
 #import "InforLayer.h"
 #import "GameLayer.h"
+#import "Model.h"
 
 @interface StartLayer ()
 
@@ -53,6 +54,7 @@
         [self addMenu];
        // [self performSelector:@selector(moveAllOut) withObject:self afterDelay:4];
     }
+    
     return self;
 }
 
@@ -357,7 +359,7 @@
 -(void)inforMenu:(CCNode*)pSender
 {
     CCScene* inforScene=[InforLayer scene];
-    [[CCDirector sharedDirector] pushScene:inforScene];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:inforScene]];
 }
 
 -(void)scoreMenu:(CCNode*)pSender
@@ -367,13 +369,16 @@
 
 -(void)gravityMenu:(CCNode*)pSender
 {
-    
+    [Model setGameModel:kGravity];
+    CCScene* scene = [GameLayer node];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }
 
 -(void)rockerMenu:(CCNode*)pSender
 {
+    [Model setGameModel:kRocker];
     CCScene* scene = [GameLayer node];
-    [[CCDirector sharedDirector] pushScene:scene];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }
 
 -(void)returnMenu:(CCNode*)pSender

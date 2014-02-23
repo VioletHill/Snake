@@ -12,6 +12,7 @@
 @interface Direction : NSObject
 
 @property (nonatomic) Vector v;
+@property (nonatomic) float speed;
 
 @end
 
@@ -37,6 +38,7 @@
 @implementation Snake
 {
     Vector lastDirection;
+    
     float speed;        //1 start 2 max
 }
 
@@ -80,6 +82,18 @@ const float maxAngel=3;
     return _moveVector;
 }
 
+-(void) addSpeed
+{
+    int length=self.body.count;
+   // speed=2;
+   // return;
+    
+    if (length>12) speed=2;
+    else if (length<3) speed=1;
+    else speed=1.0+(float)length/10.0-0.2;
+    
+}
+
 -(void)addBody
 {
     CCSprite* body=[CCSprite spriteWithFile:@"body.png"];
@@ -91,6 +105,8 @@ const float maxAngel=3;
     NSMutableArray* dir=[[[NSMutableArray alloc] init] autorelease];
     [dir addObject:@(0)];
     [self.moveVector addObject:dir];
+    
+    [self addSpeed];
 }
 
 -(Vector) getMaxVector:(Vector)v withClockwise:(BOOL)clockwise andSpeed:(float)value
@@ -132,28 +148,47 @@ const float maxAngel=3;
 
 -(void) moveHead:(Vector)nextDirection
 {
+    if (isZeroVector(nextDirection))
+    {
+        nextDirection=lastDirection;
+    }
+    
     CCSprite* head=[self.body firstObject];
-
+    
     if (![self isSameDirectionA:lastDirection andB:nextDirection])
     {
-        float crossProduct=vectorCrossPorduct(lastDirection, nextDirection);
-        float angle=VHVectorGetAngle(lastDirection, nextDirection);
-        if (angle!=0.0)
-        {
-            if (angle>maxAngel)
+        @try {
+            float crossProduct=vectorCrossPorduct(lastDirection, nextDirection);
+            float angle=VHVectorGetAngle(lastDirection, nextDirection);
+            if (isnan(angle))       //here is a bug  why angle=nan? I don't know
             {
-                BOOL clockwise=YES;
-                if (crossProduct>0) clockwise=NO;
-                nextDirection=[self getMaxVector:lastDirection withClockwise:clockwise andSpeed:speed];
-                angle=maxAngel;
+                angle=0.0;
             }
+            if (angle!=0.0)
+            {
+                if (angle>maxAngel)
+                {
+                    BOOL clockwise=YES;
+                    if (crossProduct>0) clockwise=NO;
+                    nextDirection=[self getMaxVector:lastDirection withClockwise:clockwise andSpeed:speed];
+                    angle=maxAngel;
+                }
+                
+                if (crossProduct>0) angle=-angle;
+                NSLog(@"%f %f",head.rotation,angle);
+                float newAngle=head.rotation+angle;
+                if (newAngle>360) newAngle=newAngle-360;
+                if (newAngle<-360) newAngle=newAngle+360;
+                NSLog(@"%f",newAngle);
+                [head setRotation: newAngle];
+            }
+
+        }
+        @catch (NSException *exception) {
+            nextDirection=lastDirection;
+        }
+        @finally {
             
-            if (crossProduct>0) angle=-angle;
-            
-            float newAngle=head.rotation+angle;
-            if (newAngle>360) newAngle=newAngle-360;
-            if (newAngle<-360) newAngle=newAngle+360;
-            [head setRotation: newAngle];
         }
     }
     head.position=CGPointMake(head.position.x + nextDirection.x, head.position.y + nextDirection.y);
@@ -172,7 +207,8 @@ const float maxAngel=3;
         if (dis>=nowMoveBody.contentSize.width)
         {
             Vector next=((Direction*)[moveArray objectAtIndex:1]).v;
-            nowMoveBody.position=CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y);
+            Vector moveNext=VHMakeOneDistanceVectorByVector(next);
+            nowMoveBody.position=CGPointMake(nowMoveBody.position.x+moveNext.x*speed, nowMoveBody.position.y+moveNext.y*speed);
             [self removeDirectionAtIndex:i-1];
             [self addDirection:[Direction makeDirection:next] atIndex:i];
         }

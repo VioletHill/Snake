@@ -12,6 +12,7 @@
 
 
 static Food* food=nil;
+static const int totalFood=4;
 
 +(Food*) sharedFood
 {
@@ -36,7 +37,7 @@ static Food* food=nil;
 
 -(CCSprite*) createFood
 {
-    int random=arc4random()%4+1;
+    int random=arc4random()%totalFood+1;
     CCSprite* food=[CCSprite spriteWithFile:[NSString stringWithFormat:@"food%d.png",random]];
     return food;
 }

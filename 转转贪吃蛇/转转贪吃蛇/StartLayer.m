@@ -52,7 +52,6 @@
         winSize=[[CCDirector sharedDirector] winSize];
         [self addBg];
         [self addMenu];
-       // [self performSelector:@selector(moveAllOut) withObject:self afterDelay:4];
     }
     
     return self;
@@ -76,9 +75,9 @@
 {
     if (_startItem==nil)
     {
-        _startItem=[CCMenuItemImage itemWithNormalImage:@"start.png" selectedImage:@"start.png" target:self selector:@selector(startMenu:)];
+        _startItem=[CCMenuItemImage itemWithNormalImage:@"start.png" selectedImage:@"startSelect.png" target:self selector:@selector(startMenu:)];
         _startItem.anchorPoint=CGPointMake(0, 1);
-        _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height);
+        _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-20);
     }
     return _startItem;
 }
@@ -87,9 +86,9 @@
 {
     if (_inforItem==nil)
     {
-        _inforItem=[CCMenuItemImage itemWithNormalImage:@"infor.png" selectedImage:@"infor-hd" target:self selector:@selector(inforMenu:)];
+        _inforItem=[CCMenuItemImage itemWithNormalImage:@"infor.png" selectedImage:@"inforSelect.png" target:self selector:@selector(inforMenu:)];
         _inforItem.anchorPoint=CGPointMake(0, 1);
-        _inforItem.position=CGPointMake(- _inforItem.contentSize.width, winSize.height/2);
+        _inforItem.position=CGPointMake(- _inforItem.contentSize.width, winSize.height/2-40);
     }
     return _inforItem;
 }
@@ -98,9 +97,9 @@
 {
     if (_scoreItem==nil)
     {
-        _scoreItem=[CCMenuItemImage itemWithNormalImage:@"score.png" selectedImage:@"score.png" target:self selector:@selector(scoreMenu:)];
+        _scoreItem=[CCMenuItemImage itemWithNormalImage:@"score.png" selectedImage:@"scoreSelect.png" target:self selector:@selector(scoreMenu:)];
         _scoreItem.anchorPoint=CGPointMake(0, 1);
-        _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, winSize.height/2-_scoreItem.contentSize.height);
+        _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, winSize.height/2-_scoreItem.contentSize.height-60);
     }
     return _scoreItem;
 }
@@ -131,7 +130,7 @@
 {
     if (_returnItem==nil)
     {
-        _returnItem=[CCMenuItemImage itemWithNormalImage:@"return.png" selectedImage:@"return.png" target:self selector:@selector(returnMenu:)];
+        _returnItem=[CCMenuItemImage itemWithNormalImage:@"return.png" selectedImage:@"returnSelect.png" target:self selector:@selector(returnMenu:)];
         _returnItem.anchorPoint=CGPointMake(0.5, 0);
         _returnItem.position=CGPointMake(winSize.width/2, - _returnItem.contentSize.height);
     }
@@ -325,15 +324,7 @@
 
 -(void) addBg
 {
-    CCSprite* bg = nil ;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        bg = [CCSprite spriteWithFile:@"beginBackground.jpg"];
-    }
-    else
-    {
-        bg = [CCSprite spriteWithFile:@"beginBackground~iPad.jpg"];
-    }
+    CCSprite* bg=[CCSprite spriteWithFile:@"beginBackground.png"];
     bg.position=CGPointMake(winSize.width/2, winSize.height/2);
     [self addChild:bg];
     

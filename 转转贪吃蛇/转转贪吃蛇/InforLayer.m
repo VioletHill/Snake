@@ -58,18 +58,23 @@
 {
     if (_inforSprite==nil)
     {
-        _inforSprite=[[[NSMutableArray alloc] init] autorelease];
+        _inforSprite=[[NSMutableArray alloc] init];
     }
     return _inforSprite;
+}
+
+-(CGFloat) itemHeightPosition
+{
+    return 10;
 }
 
 -(CCMenuItemImage*) backItem
 {
     if (_backItem==nil)
     {
-        _backItem=[CCMenuItemImage itemWithNormalImage:@"backStart.png" selectedImage:@"backStart.png" target:self selector:@selector(backMenu:)];
+        _backItem=[CCMenuItemImage itemWithNormalImage:@"backStart.png" selectedImage:@"backStartSelect.png" target:self selector:@selector(backMenu:)];
         _backItem.anchorPoint=CGPointZero;
-        _backItem.position=CGPointZero;
+        _backItem.position=CGPointMake(self.lastInfor.contentSize.width+self.lastInfor.position.x+50, self.lastInfor.position.y);
     }
     return _backItem;
 }
@@ -78,9 +83,10 @@
 {
     if (_lastInfor==nil)
     {
-        _lastInfor=[CCMenuItemImage itemWithNormalImage:@"lastInfor.png" selectedImage:@"lastInfor.png" target:self selector:@selector(lastInforMenu:)];
+        _lastInfor=[CCMenuItemImage itemWithNormalImage:@"lastInfor.png" selectedImage:@"lastInforSelect.png" target:self selector:@selector(lastInforMenu:)];
         _lastInfor.anchorPoint=CGPointZero;
-        _lastInfor.position=CGPointMake(self.backItem.position.x+self.backItem.contentSize.width, self.backItem.contentSize.height);
+        _lastInfor.position=CGPointZero;
+        _lastInfor.position=CGPointMake(50,[self itemHeightPosition]);
     }
     return _lastInfor;
 }
@@ -90,9 +96,9 @@
 {
     if (_nextInfor==nil)
     {
-        _nextInfor=[CCMenuItemImage itemWithNormalImage:@"nextInfor.png" selectedImage:@"nextInfor.png" target:self selector:@selector(nextInforMenu:)];
+        _nextInfor=[CCMenuItemImage itemWithNormalImage:@"nextInfor.png" selectedImage:@"nextInforSelect.png" target:self selector:@selector(nextInforMenu:)];
         _nextInfor.anchorPoint=CGPointZero;
-        _nextInfor.position=CGPointMake(self.lastInfor.position.x+self.lastInfor.contentSize.width, self.lastInfor.contentSize.height);
+        _nextInfor.position=CGPointMake(self.backItem.position.x+self.backItem.contentSize.width+50, self.backItem.position.y);
     }
     return _nextInfor;
 }
@@ -118,7 +124,7 @@
 {
     for (int i=[self totInfor]; i>=1; i--)
     {
-        CCSprite* sprite=[CCSprite spriteWithFile:[NSString stringWithFormat:@"infor%d.jpg",i]];
+        CCSprite* sprite=[CCSprite spriteWithFile:[NSString stringWithFormat:@"infor%d.png",i]];
         sprite.anchorPoint=CGPointZero;
         sprite.position=CGPointMake(0, 0);
         [self addChild:sprite];
@@ -174,6 +180,7 @@
 
 -(void)onExit
 {
+    [self.inforSprite release];
     [super onExit];
 }
 

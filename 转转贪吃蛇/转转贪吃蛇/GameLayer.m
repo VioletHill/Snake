@@ -173,7 +173,7 @@ static BOOL isEnter=NO;
         bg.position=CGPointMake(winSize.width/2, winSize.height/2);
         
         CCMenuItemImage* returnHome=[CCMenuItemImage itemWithNormalImage:@"pauseBackHome.png" selectedImage:@"pauseBackHome.png" target:self selector:@selector(returnHome:)];
-        returnHome.position=CGPointMake(50, 200);
+        returnHome.position=CGPointMake(50, 0);
         
         CCMenuItemImage* pauseNewGame=[CCMenuItemImage itemWithNormalImage:@"pauseNewGame.png" selectedImage:@"pauseNewGame.png" target:self selector:@selector(resumeNewGame:)];
         pauseNewGame.position=CGPointMake(250, 200);
@@ -185,9 +185,6 @@ static BOOL isEnter=NO;
         menu.position=CGPointZero;
         [_pauseLayer addChild:bg];
         [_pauseLayer addChild:menu];
-        
-        [self addChild:_pauseLayer];
-        
     }
     return _pauseLayer;
 }
@@ -207,14 +204,15 @@ static BOOL isEnter=NO;
 
 -(void) resumeGame:(id)sender
 {
-    [self.pauseLayer setVisible:NO];
+    [self.pauseLayer removeFromParentAndCleanup:YES];
+    self.pauseLayer=nil;
     [[CCDirector sharedDirector] resume];
 }
 
 -(void) pauseGame:(id)sender
 {
     [[CCDirector sharedDirector] pause];
-    [self.pauseLayer setVisible:YES];
+    [self addChild:self.pauseLayer];
 }
 
 -(void) endGame

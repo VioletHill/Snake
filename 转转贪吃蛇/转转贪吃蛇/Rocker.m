@@ -75,11 +75,18 @@
 
 -(void) moveToNextPoint:(CGPoint)point
 {
-    CGPoint newPoint=point;
-    newPoint.x=min(self.contentSize.width,newPoint.x);
-    newPoint.x=max(0, newPoint.x);
-    newPoint.y=min(self.contentSize.height, newPoint.y);
-    newPoint.y=max(0, newPoint.y);
+    if ([self isTouchPointAtLayer:point])
+    {
+        self.touchSprite.position=CGPointMake(point.x, point.y);
+        return ;
+    }
+    CGFloat radius=self.contentSize.width/2;
+    CGFloat angleX=(point.x-self.contentSize.width/2);
+    CGFloat angleY=(point.y-self.contentSize.height/2);
+    CGFloat dis=sqrtf( pow(angleX, 2)+pow(angleY, 2) );
+    CGPoint newPoint;
+    newPoint.x=angleX*radius/dis+self.contentSize.width/2;
+    newPoint.y=angleY*radius/dis+self.contentSize.height/2;
     self.touchSprite.position=newPoint;
 }
 

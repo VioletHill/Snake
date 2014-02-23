@@ -22,7 +22,7 @@
 {
     if (self=[super init])
     {
-        motionManager=[[CMMotionManager alloc] init];
+        motionManager=[[[CMMotionManager alloc] init] retain];
         motionManager.accelerometerUpdateInterval=0.01;
         [motionManager startAccelerometerUpdates];
     }
@@ -31,11 +31,15 @@
 
 -(Vector) getDirctionVector
 {
-    CMRotationRate rotationRate = motionManager.deviceMotion.rotationRate;
-    float rotationX = rotationRate.x;
-    float rotationY = rotationRate.y;
-    float rotationZ = rotationRate.z;
-    return VHMakeVector(rotationX, rotationY);
+    motionManager=[[CMMotionManager alloc] init];
+
+    double rotationRate = motionManager.deviceMotion.gravity.x;
+    NSLog(@"%f",rotationRate);
+//    float rotationX = rotationRate.x;
+//    float rotationY = rotationRate.y;
+//    float rotationZ = rotationRate.z;
+//    NSLog(@"%f",rotationX);
+//    return VHMakeVector(rotationX, rotationY);
 //    double gravityX = self.motionManager.deviceMotion.gravity.x;
 //    double gravityY = self.motionManager.deviceMotion.gravity.y;
 //    double gravityZ = self.motionManager.deviceMotion.gravity.z;

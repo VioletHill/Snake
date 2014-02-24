@@ -147,8 +147,16 @@ static BOOL isEnter=NO;
     return [snake isEatSelf];
 }
 
--(void)update:(ccTime)delta
+-(float) getDelayTime
 {
+    //return 1.0/100;
+    return 1.0/(40.0+score);
+}
+
+-(void)updateSnake:(ccTime)delta
+{
+    [self performSelector:@selector(updateSnake:) withObject:self afterDelay:[self getDelayTime]];
+
     if ([self isCollision])
     {
         [self endGame];
@@ -157,6 +165,7 @@ static BOOL isEnter=NO;
     if ([self isEatFood])
     {
         [self eatFood];
+        score++;
     }
     [snake move:model.getDirctionVector];
 }
@@ -243,7 +252,8 @@ static BOOL isEnter=NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame:) name:@"EnterBackgroundObserver" object:nil];
     isEnter=YES;
-    [self scheduleUpdate];
+    [self updateSnake:0.1];
+   // [self scheduleUpdate];
 }
 
 -(void) onExit

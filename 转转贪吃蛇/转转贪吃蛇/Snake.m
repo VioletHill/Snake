@@ -31,7 +31,9 @@
 
 @property (nonatomic,retain) NSMutableArray* body;
 
-@property (nonatomic,retain) NSMutableArray* moveVector;
+@property (nonatomic,retain) NSMutableArray* moveVector;    //moveVector 里面的内容是一个数组
+                                                            //数组的每个元素 保存了一个Direction  其中记录蛇的index 的下一个移动方向
+                                                            // OBJECT at index 0 保存着距离上一个身体的距离 其他后面的元素保存着方向
 
 @end
 
@@ -40,6 +42,10 @@
     Vector lastDirection;
     
     float speed;        //1 start 2 max
+                        //最大值与最小值差值不予大于0.5
+                        //speed 变化太大会导致蛇蛇分离  解决办法是增加刷新频率 不改变speed大小 但是这样好吗？
+    
+                        //* speed 属性已经被废除 全部=1  修改刷新频率增加速度
 }
 
 @synthesize body=_body;
@@ -52,7 +58,7 @@ const float maxAngel=3;
 {
     if (self=[super init])
     {
-        speed=1;
+        speed=4;
         CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
         head.zOrder=1;
         head.position=CGPointMake(0, 0);
@@ -82,18 +88,6 @@ const float maxAngel=3;
     return _moveVector;
 }
 
--(void) addSpeed
-{
-    int length=self.body.count;
-   // speed=2;
-   // return;
-    
-    if (length>12) speed=2;
-    else if (length<3) speed=1;
-    else speed=1.0+(float)length/10.0-0.2;
-    
-}
-
 -(void)addBody
 {
     CCSprite* body=[CCSprite spriteWithFile:@"body.png"];
@@ -105,8 +99,6 @@ const float maxAngel=3;
     NSMutableArray* dir=[[[NSMutableArray alloc] init] autorelease];
     [dir addObject:@(0)];
     [self.moveVector addObject:dir];
-    
-    [self addSpeed];
 }
 
 -(Vector) getMaxVector:(Vector)v withClockwise:(BOOL)clockwise andSpeed:(float)value
@@ -131,8 +123,12 @@ const float maxAngel=3;
     if (self.moveVector.count<=index) return ;
     NSMutableArray* moveDirection=[self.moveVector objectAtIndex:index];
     NSNumber* dis=[moveDirection firstObject];
-    dis=@([dis floatValue]+getVectorLength(dir.v));
-    [moveDirection replaceObjectAtIndex:0 withObject:dis];
+    NSLog(@"%f",getVectorLength(dir.v));
+    if ([dis floatValue]<50.0)
+    {
+        dis=@([dis floatValue]+getVectorLength(dir.v));
+        [moveDirection replaceObjectAtIndex:0 withObject:dis];
+    }
     [moveDirection addObject:dir];
 }
 
@@ -140,9 +136,6 @@ const float maxAngel=3;
 {
     if (self.moveVector.count<=index) return;
     NSMutableArray* moveDirection=[self.moveVector objectAtIndex:index];
-    Vector next=((Direction*)[moveDirection objectAtIndex:1]).v;
-    float dis=[[moveDirection firstObject] floatValue]-getVectorLength(next);
-    [moveDirection replaceObjectAtIndex:0 withObject:@(dis)];
     [moveDirection removeObjectAtIndex:1];
 }
 
@@ -150,7 +143,8 @@ const float maxAngel=3;
 {
     if (isZeroVector(nextDirection))
     {
-        nextDirection=lastDirection;
+        nextDirection=VHMakeOneDistanceVectorByVector(lastDirection);
+        nextDirection=VHVectorMultiply(nextDirection, speed);
     }
     
     CCSprite* head=[self.body firstObject];
@@ -175,11 +169,11 @@ const float maxAngel=3;
                 }
                 
                 if (crossProduct>0) angle=-angle;
-                NSLog(@"%f %f",head.rotation,angle);
+               // NSLog(@"%f %f",head.rotation,angle);
                 float newAngle=head.rotation+angle;
                 if (newAngle>360) newAngle=newAngle-360;
                 if (newAngle<-360) newAngle=newAngle+360;
-                NSLog(@"%f",newAngle);
+               // NSLog(@"%f",newAngle);
                 [head setRotation: newAngle];
             }
 
@@ -207,8 +201,7 @@ const float maxAngel=3;
         if (dis>=nowMoveBody.contentSize.width)
         {
             Vector next=((Direction*)[moveArray objectAtIndex:1]).v;
-            Vector moveNext=VHMakeOneDistanceVectorByVector(next);
-            nowMoveBody.position=CGPointMake(nowMoveBody.position.x+moveNext.x*speed, nowMoveBody.position.y+moveNext.y*speed);
+            nowMoveBody.position=CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y);
             [self removeDirectionAtIndex:i-1];
             [self addDirection:[Direction makeDirection:next] atIndex:i];
         }

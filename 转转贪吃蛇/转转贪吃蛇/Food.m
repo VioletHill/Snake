@@ -31,7 +31,11 @@ static const int totalFood=4;
 
 -(CGSize)foodSize
 {
-    return CGSizeMake(40, 40);
+    if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        return CGSizeMake(80, 80);
+    }
+    else return CGSizeMake(35, 35);
 }
 
 

@@ -12,7 +12,11 @@
 
 +(CCLabelTTF*) labelWithScore:(int)score
 {
-    return [CCLabelTTF labelWithScore:score andFont:30];
+    if ([UIDevice currentDevice].userInterfaceIdiom==UIUserInterfaceIdiomPad)
+    {
+        return [CCLabelTTF labelWithScore:score andFont:60];
+    }
+    else return [CCLabelTTF labelWithScore:score andFont:30];
 }
 
 +(CCLabelTTF*) labelWithScore:(int)score andFont:(int)font

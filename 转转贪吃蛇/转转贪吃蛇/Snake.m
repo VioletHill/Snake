@@ -58,7 +58,14 @@ const float maxAngel=3;
 {
     if (self=[super init])
     {
-        speed=3;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+        {
+            speed=6;
+        }
+        else
+        {
+            speed=3;
+        }
         CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
         head.zOrder=1;
         head.position=CGPointMake(0, 0);
@@ -123,7 +130,7 @@ const float maxAngel=3;
     NSMutableArray* moveDirection=[self.moveVector objectAtIndex:index];
     NSNumber* dis=[moveDirection firstObject];
    // NSLog(@"%f",getVectorLength(dir.v));
-    if ([dis floatValue]<50.0)
+    if ([dis floatValue]<200.0)
     {
         dis=@([dis floatValue]+getVectorLength(dir.v));
         [moveDirection replaceObjectAtIndex:0 withObject:dis];
@@ -197,7 +204,16 @@ const float maxAngel=3;
         NSMutableArray* moveArray=[self.moveVector objectAtIndex:i-1];
         CCSprite* nowMoveBody=[self.body objectAtIndex:i];
         float dis=[(NSNumber*)[moveArray firstObject] floatValue];
-        if (dis>=nowMoveBody.contentSize.width)
+        float minMoveDis=0;
+        if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+        {
+            minMoveDis=nowMoveBody.contentSize.width-5;
+        }
+        else
+        {
+            minMoveDis=nowMoveBody.contentSize.width;
+        }
+        if (dis>=minMoveDis)
         {
             Vector next=((Direction*)[moveArray objectAtIndex:1]).v;
             nowMoveBody.position=CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y);

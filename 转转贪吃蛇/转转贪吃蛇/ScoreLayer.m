@@ -47,16 +47,46 @@
 -(void) addGravityScore
 {
     int score=[[UserData sharedUserData] getRecordInModel:kGravity];
-    CCLabelTTF* scoreLabel=[CCLabelTTF labelWithScore:score andFont:30];
-    scoreLabel.position=ccp(winSize.width/2+50, winSize.height/2-10);
+    CCLabelTTF* scoreLabel=[CCLabelTTF labelWithScore:score];
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        scoreLabel.position=ccp(winSize.width/2+50, winSize.height/2-20);
+    }
+    else
+    {
+        if (winSize.width==480.0)
+        {
+            scoreLabel.position=ccp(winSize.width/2+50, winSize.height/2-10);
+        }
+        else
+        {
+            scoreLabel.position=ccp(winSize.width/2+50, winSize.height/2+5);
+        }
+    }
     [self addChild:scoreLabel];
 }
 
 -(void) addRockerScore
 {
     int score=[[UserData sharedUserData] getRecordInModel:kRocker];
-    CCLabelTTF* scoreLabel=[CCLabelTTF labelWithScore:score andFont:30];
-    scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+30);
+    CCLabelTTF* scoreLabel=[CCLabelTTF labelWithScore:score];
+    NSLog(@"%f",winSize.height);
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+80);
+    }
+    else
+    {
+        if (winSize.width==480.0)
+        {
+            scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+30);
+        }
+        else
+        {
+            scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+45);
+        }
+    }
+    
     [self addChild:scoreLabel];
 }
 

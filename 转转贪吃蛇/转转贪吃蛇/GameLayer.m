@@ -76,6 +76,7 @@ static BOOL isEnter=NO;
 
 -(void)restart
 {
+    score=0;
     [food removeFromParent];
     [snake removeFromParent];
     
@@ -111,7 +112,14 @@ static BOOL isEnter=NO;
 {
     model=[Model instanceTypeWithGameModel:[Model getGameModel]];
     
-    model.position=CGPointMake(winSize.width-model.contentSize.width-50, 50);
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+         model.position=CGPointMake(winSize.width-model.contentSize.width-100, 100);
+    }
+    else
+    {
+        model.position=CGPointMake(winSize.width-model.contentSize.width-50, 50);
+    }
     [self addChild:model];
 }
 
@@ -191,18 +199,24 @@ static BOOL isEnter=NO;
         CCSprite* bg=[CCSprite spriteWithFile:@"pauseBackground.png"];
         bg.position=CGPointMake(winSize.width/2, winSize.height/2);
         
-        CCMenuItemImage* returnHome=[CCMenuItemImage itemWithNormalImage:@"pauseBackHome.png" selectedImage:@"pauseBackHome.png" target:self selector:@selector(returnHome:)];
-        returnHome.position=CGPointMake(50, 0);
+        CCSprite* pauseLayout=[CCSprite spriteWithFile:@"pauseLayout.png"];
+        pauseLayout.position=CGPointMake(winSize.width/2, winSize.height/2);
         
-        CCMenuItemImage* pauseNewGame=[CCMenuItemImage itemWithNormalImage:@"pauseNewGame.png" selectedImage:@"pauseNewGame.png" target:self selector:@selector(resumeNewGame:)];
-        pauseNewGame.position=CGPointMake(250, 200);
         
-        CCMenuItemImage* resumeGame=[CCMenuItemImage itemWithNormalImage:@"pauseContinue.png" selectedImage:@"pauseContinue.png" target:self selector:@selector(resumeGame:)];
-        resumeGame.position=CGPointMake(500, 200);
+        CCMenuItemImage* returnHome=[CCMenuItemImage itemWithNormalImage:@"pauseBackHome.png" selectedImage:@"pauseBackHomeSelect.png" target:self selector:@selector(returnHome:)];
+        returnHome.position=CGPointMake(winSize.width/2-pauseLayout.contentSize.width/2+returnHome.contentSize.width/2,winSize.height/2);
+        
+        CCMenuItemImage* resumeGame=[CCMenuItemImage itemWithNormalImage:@"pauseContinue.png" selectedImage:@"pauseContinueSelect.png" target:self selector:@selector(resumeGame:)];
+        resumeGame.position=CGPointMake(winSize.width/2, winSize.height/2);
+        
+        CCMenuItemImage* pauseNewGame=[CCMenuItemImage itemWithNormalImage:@"pauseNewGame.png" selectedImage:@"pauseNewGameSelect.png" target:self selector:@selector(resumeNewGame:)];
+        pauseNewGame.position=CGPointMake(winSize.width/2+pauseLayout.contentSize.width/2-pauseNewGame.contentSize.width/2, winSize.height/2);
         
         CCMenu* menu=[CCMenu menuWithItems:returnHome, pauseNewGame,resumeGame, nil];
         menu.position=CGPointZero;
+        
         [_pauseLayer addChild:bg];
+        [_pauseLayer addChild:pauseLayout];
         [_pauseLayer addChild:menu];
     }
     return _pauseLayer;

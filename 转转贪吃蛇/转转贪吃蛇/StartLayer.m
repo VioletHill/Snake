@@ -132,7 +132,7 @@
 {
     if (_returnItem==nil)
     {
-        _returnItem=[CCMenuItemImage itemWithNormalImage:@"return.png" selectedImage:@"returnSelect.png" target:self selector:@selector(returnMenu:)];
+        _returnItem=[CCMenuItemImage itemWithNormalImage:@"modelChoseBack.png" selectedImage:@"modelChoseBackSelect.png" target:self selector:@selector(returnMenu:)];
         _returnItem.anchorPoint=CGPointMake(0.5, 0);
         _returnItem.position=CGPointMake(winSize.width/2, - _returnItem.contentSize.height);
     }

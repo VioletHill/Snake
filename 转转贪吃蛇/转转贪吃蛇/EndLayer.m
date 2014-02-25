@@ -59,7 +59,14 @@
 -(void) addScore
 {
     CCLabelTTF* scoreLable=[CCLabelTTF labelWithScore:[[UserData sharedUserData] getThisTimeScore] ];
-    [scoreLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2+60)];
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        [scoreLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2+130)];
+    }
+    else
+    {
+        [scoreLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2+60)];
+    }
     [self addChild:scoreLable];
 }
 
@@ -67,7 +74,14 @@
 {
     GameModel model=[[UserData sharedUserData] getThisTimeModel];
     CCLabelTTF* recordLable=[CCLabelTTF labelWithScore:[[UserData sharedUserData] getRecordInModel:model] ];
-    [recordLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2-10)];
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        [recordLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2-20)];
+    }
+    else
+    {
+        [recordLable setPosition:CGPointMake(winSize.width/2+50, winSize.height/2)];
+    }
     [self addChild:recordLable];
     
     int score=[[UserData sharedUserData] getThisTimeScore];

@@ -80,7 +80,14 @@
     {
         _startItem=[CCMenuItemImage itemWithNormalImage:@"start.png" selectedImage:@"startSelect.png" target:self selector:@selector(startMenu:)];
         _startItem.anchorPoint=CGPointMake(0, 1);
-        _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-50);
+        if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+        {
+            _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-50);
+        }
+        else
+        {
+            _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-20);
+        }
     }
     return _startItem;
 }
@@ -91,7 +98,14 @@
     {
         _inforItem=[CCMenuItemImage itemWithNormalImage:@"infor.png" selectedImage:@"inforSelect.png" target:self selector:@selector(inforMenu:)];
         _inforItem.anchorPoint=CGPointMake(0, 1);
-        _inforItem.position=CGPointMake(- _inforItem.contentSize.width, self.startItem.position.y-self.startItem.contentSize.height-20);
+        if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+        {
+            _inforItem.position=CGPointMake(- _inforItem.contentSize.width, self.startItem.position.y-self.startItem.contentSize.height-20);
+        }
+        else
+        {
+            _inforItem.position=CGPointMake(- _inforItem.contentSize.width, self.startItem.position.y-self.startItem.contentSize.height-5);
+        }
     }
     return _inforItem;
 }
@@ -102,7 +116,14 @@
     {
         _scoreItem=[CCMenuItemImage itemWithNormalImage:@"score.png" selectedImage:@"scoreSelect.png" target:self selector:@selector(scoreMenu:)];
         _scoreItem.anchorPoint=CGPointMake(0, 1);
-        _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, self.inforItem.position.y-self.inforItem.contentSize.height-20);
+        if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+        {
+            _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, self.inforItem.position.y-self.inforItem.contentSize.height-20);
+        }
+        else
+        {
+            _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, self.inforItem.position.y-self.inforItem.contentSize.height-5);
+        }
     }
     return _scoreItem;
 }

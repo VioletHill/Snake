@@ -5,7 +5,7 @@
 //  Created by 邱峰 on 13-12-30.
 //  Copyright (c) 2013年 邱峰. All rights reserved.
 //
-
+#import "SimpleAudioEngine.h"
 #import "UserData.h"
 
 @implementation UserData
@@ -69,6 +69,42 @@ static UserData* userData=nil;
 -(int) getThisTimeScore
 {
     return thisTimeScore;
+}
+
+-(BOOL) isNeedBackgroundMusic
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"isNeedBgm"];
+}
+
+-(BOOL) isNeedEffect
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"isNeedEffect"];
+}
+
+-(void) setIsNeedBackgroundMusic:(BOOL)is
+{
+    [[NSUserDefaults standardUserDefaults] setBool:is forKey:@"isNeedBgm"];
+    if (is)
+    {
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying]) return;
+        else [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background.mp3" loop:YES];
+    }
+}
+
+-(void) setIsNeedEffect:(BOOL)is
+{
+    [[NSUserDefaults standardUserDefaults] setBool:is forKey:@"isNeedEffect"];
+}
+
+-(void) setDefaultSetting
+{
+    BOOL isFirstLaunch=![[[NSUserDefaults standardUserDefaults] objectForKey:@"isFirstLaunch"] boolValue];
+    if (isFirstLaunch)
+    {
+        [self setIsNeedEffect:YES];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isNeedBgm"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isFirstLaunch"];
+    }
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "InforLayer.h"
 #import "StartLayer.h"
+#import "SimpleAudioEngine+MusicAndEffect.h"
 
 @interface InforLayer()
 
@@ -65,7 +66,26 @@
 
 -(CGFloat) itemHeightPosition
 {
-    return 10;
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        return 70;
+    }
+    else
+    {
+        return 20;
+    }
+}
+
+-(CGFloat) itemWithPosition
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        return 80;
+    }
+    else
+    {
+        return 40;
+    }
 }
 
 -(CCMenuItemImage*) backItem
@@ -74,7 +94,7 @@
     {
         _backItem=[CCMenuItemImage itemWithNormalImage:@"backStart.png" selectedImage:@"backStartSelect.png" target:self selector:@selector(backMenu:)];
         _backItem.anchorPoint=CGPointZero;
-        _backItem.position=CGPointMake(self.lastInfor.contentSize.width+self.lastInfor.position.x+50, self.lastInfor.position.y);
+        _backItem.position=CGPointMake(self.lastInfor.contentSize.width+self.lastInfor.position.x+[self itemWithPosition], self.lastInfor.position.y);
     }
     return _backItem;
 }
@@ -86,7 +106,7 @@
         _lastInfor=[CCMenuItemImage itemWithNormalImage:@"lastInfor.png" selectedImage:@"lastInforSelect.png" target:self selector:@selector(lastInforMenu:)];
         _lastInfor.anchorPoint=CGPointZero;
         _lastInfor.position=CGPointZero;
-        _lastInfor.position=CGPointMake(50,[self itemHeightPosition]);
+        _lastInfor.position=CGPointMake(80,[self itemHeightPosition]);
     }
     return _lastInfor;
 }
@@ -98,7 +118,7 @@
     {
         _nextInfor=[CCMenuItemImage itemWithNormalImage:@"nextInfor.png" selectedImage:@"nextInforSelect.png" target:self selector:@selector(nextInforMenu:)];
         _nextInfor.anchorPoint=CGPointZero;
-        _nextInfor.position=CGPointMake(self.backItem.position.x+self.backItem.contentSize.width+50, self.backItem.position.y);
+        _nextInfor.position=CGPointMake(self.backItem.position.x+self.backItem.contentSize.width+[self itemWithPosition], self.backItem.position.y);
     }
     return _nextInfor;
 }
@@ -148,12 +168,14 @@
 
 -(void) backMenu:(CCNode*)pSender
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:[StartLayer node]]];
 }
 
 
 -(void) lastInforMenu:(CCNode*)pSender
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     if (currentIndex==0 || isInforMoving) return;
     isInforMoving=YES;
     CCSprite* sprite=[self.inforSprite objectAtIndex:currentIndex-1];
@@ -163,6 +185,7 @@
 
 -(void) nextInforMenu:(CCNode*)pSender
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     if (currentIndex==[self totInfor]-1 || isInforMoving) return;
     isInforMoving=YES;
     CCSprite* sprite=[self.inforSprite objectAtIndex:currentIndex];

@@ -12,6 +12,7 @@
 #import "Model.h"
 #import "Gravity.h"
 #import "ScoreLayer.h"
+#import "SimpleAudioEngine+MusicAndEffect.h"
 
 @interface StartLayer ()
 
@@ -79,7 +80,7 @@
     {
         _startItem=[CCMenuItemImage itemWithNormalImage:@"start.png" selectedImage:@"startSelect.png" target:self selector:@selector(startMenu:)];
         _startItem.anchorPoint=CGPointMake(0, 1);
-        _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-20);
+        _startItem.position=CGPointMake(- _startItem.contentSize.width, winSize.height/2+_startItem.contentSize.height-50);
     }
     return _startItem;
 }
@@ -90,7 +91,7 @@
     {
         _inforItem=[CCMenuItemImage itemWithNormalImage:@"infor.png" selectedImage:@"inforSelect.png" target:self selector:@selector(inforMenu:)];
         _inforItem.anchorPoint=CGPointMake(0, 1);
-        _inforItem.position=CGPointMake(- _inforItem.contentSize.width, winSize.height/2-40);
+        _inforItem.position=CGPointMake(- _inforItem.contentSize.width, self.startItem.position.y-self.startItem.contentSize.height-20);
     }
     return _inforItem;
 }
@@ -101,7 +102,7 @@
     {
         _scoreItem=[CCMenuItemImage itemWithNormalImage:@"score.png" selectedImage:@"scoreSelect.png" target:self selector:@selector(scoreMenu:)];
         _scoreItem.anchorPoint=CGPointMake(0, 1);
-        _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, winSize.height/2-_scoreItem.contentSize.height-60);
+        _scoreItem.position=CGPointMake(- _scoreItem.contentSize.width, self.inforItem.position.y-self.inforItem.contentSize.height-20);
     }
     return _scoreItem;
 }
@@ -112,7 +113,7 @@
     {
         _gravityModelItem=[CCMenuItemImage itemWithNormalImage:@"gravityModel.png" selectedImage:@"gravityModelSelect.png" target:self selector:@selector(gravityMenu:)];
         _gravityModelItem.anchorPoint=CGPointMake(0, 0.5);
-        _gravityModelItem.position=CGPointMake(winSize.width/2, winSize.height+_gravityModelItem.contentSize.height);
+        _gravityModelItem.position=CGPointMake(winSize.width/2+25, winSize.height+_gravityModelItem.contentSize.height);
     }
     return _gravityModelItem;
 }
@@ -252,7 +253,16 @@
 
 -(void) moveInGravityItem
 {
-    CGPoint point=CGPointMake(self.gravityModelItem.position.x, winSize.height/2);
+    CGPoint point;
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        point=CGPointMake(self.gravityModelItem.position.x, winSize.height/2+50);
+    }
+    else
+    {
+        point=CGPointMake(self.gravityModelItem.position.x, winSize.height/2+20);
+    }
+    
     [self moveNode:self.gravityModelItem intoPoint:point withDuration:[self moveDuration] andDelay:[self moveDelay:self.gravityModelItem]];
 }
 
@@ -266,7 +276,15 @@
 
 -(void) moveInRockerItem
 {
-    CGPoint point=CGPointMake(self.rockerModelItem.position.x, winSize.height/2);
+    CGPoint point;
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        point=CGPointMake(self.rockerModelItem.position.x, winSize.height/2+50);
+    }
+    else
+    {
+        point=CGPointMake(self.rockerModelItem.position.x, winSize.height/2+20);
+    }
     [self moveNode:self.rockerModelItem intoPoint:point withDuration:[self moveDuration] andDelay:[self moveDelay:self.rockerModelItem]];
 }
 
@@ -280,7 +298,16 @@
 
 -(void) moveInReturnItem
 {
-    CGPoint point=CGPointMake(self.returnItem.position.x, 0);
+    CGPoint point;
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+       point=CGPointMake(self.returnItem.position.x, 50);
+    }
+    else
+    {
+        point=CGPointMake(self.returnItem.position.x, 20);
+    }
+    
     [self moveNode:self.returnItem intoPoint:point withDuration:[self moveDuration] andDelay:[self moveDelay:self.returnItem]];
 }
 
@@ -345,24 +372,29 @@
 
 -(void)startMenu:(CCNode*)pSender
 {
+    [[SimpleAudioEngine sharedEngine] playButtonEffect];
     [self moveStartMenuOut];
     [self moveChoseIn];
 }
 
 -(void)inforMenu:(CCNode*)pSender
 {
+    [[SimpleAudioEngine sharedEngine] playButtonEffect];
     CCScene* inforScene=[InforLayer scene];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:inforScene]];
 }
 
 -(void)scoreMenu:(CCNode*)pSender
 {
+    
+    [[SimpleAudioEngine sharedEngine] playButtonEffect];
     CCScene* highScoreScene=[ScoreLayer scene];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:highScoreScene]];
 }
 
 -(void)gravityMenu:(CCNode*)pSender
 {
+    [[SimpleAudioEngine sharedEngine] playButtonEffect];
     if ([Gravity isDeviceMotionAvailable])
     {
         [Model setGameModel:kGravity];
@@ -379,6 +411,7 @@
 
 -(void)rockerMenu:(CCNode*)pSender
 {
+    [[SimpleAudioEngine sharedEngine] playButtonEffect];
     [Model setGameModel:kRocker];
     CCScene* scene = [GameLayer node];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
@@ -386,8 +419,15 @@
 
 -(void)returnMenu:(CCNode*)pSender
 {
+    [[SimpleAudioEngine sharedEngine] playBackEffect];
     [self moveChoseOut];
     [self performSelector:@selector(moveStartMenuIn) withObject:self afterDelay:[self moveDuration]];
+}
+
+-(void) onEnter
+{
+    [super onEnter];
+    [[SimpleAudioEngine sharedEngine] playBgm];
 }
 
 @end

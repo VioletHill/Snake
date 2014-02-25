@@ -10,6 +10,7 @@
 #import "UserData.h"
 #import "StartLayer.h"
 #import "GameLayer.h"
+#import "SimpleAudioEngine+MusicAndEffect.h"
 #import "CCLabelTTF+ScoreLable.h"
 
 @implementation EndLayer
@@ -97,11 +98,21 @@
 {
     CCMenuItemImage* backItem=[CCMenuItemImage itemWithNormalImage:@"gameoverReturn.png" selectedImage:@"gameoverReturnSelect.png" target:self selector:@selector(returnToStartLayer)];
     backItem.anchorPoint=ccp(1, 0);
-    backItem.position=ccp(winSize.width/2-10,30);
+   
     
     CCMenuItemImage* retry=[CCMenuItemImage itemWithNormalImage:@"gameoverRetry.png" selectedImage:@"gameoverRetrySelect.png" target:self selector:@selector(retry)];
     retry.anchorPoint=ccp(0, 0);
-    retry.position=ccp(winSize.width/2+10,30);
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        backItem.position=ccp(winSize.width/2-20,60);
+        retry.position=ccp(winSize.width/2+20,60);
+    }
+    else
+    {
+        backItem.position=ccp(winSize.width/2-20,25);
+        retry.position=ccp(winSize.width/2+20,25);
+    }
     
     CCMenu* back=[CCMenu menuWithItems:backItem,retry, nil];
     back.anchorPoint=ccp(0, 0);
@@ -111,12 +122,14 @@
 
 -(void) returnToStartLayer
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer scene];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }
 
 -(void) retry
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[GameLayer scene];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }

@@ -25,4 +25,11 @@
 
 -(GameModel)getThisTimeModel;
 
+-(BOOL) isNeedBackgroundMusic;
+-(BOOL) isNeedEffect;
+-(void) setIsNeedBackgroundMusic:(BOOL)is;
+-(void) setIsNeedEffect:(BOOL)is;
+
+-(void) setDefaultSetting;
+
 @end

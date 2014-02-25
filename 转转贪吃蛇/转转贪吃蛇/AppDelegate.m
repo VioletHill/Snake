@@ -12,6 +12,7 @@
 #import "IntroLayer.h"
 #import "GameLayer.h"
 #import "LocalNotification.h"
+#import "UserData.h"
 
 @implementation MyNavigationController
 
@@ -62,7 +63,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Create the main window
+    [[UserData sharedUserData] setDefaultSetting];
     [[LocalNotification sharedLoaclNotification] cancelNotifation];
+    
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	

@@ -211,7 +211,15 @@ const float maxAngel=3;
         }
         else
         {
-            minMoveDis=nowMoveBody.contentSize.width;
+            
+            if (i==1)
+            {
+                minMoveDis=nowMoveBody.contentSize.width+5;
+            }
+            else
+            {
+                minMoveDis=nowMoveBody.contentSize.width;
+            }
         }
         if (dis>=minMoveDis)
         {

@@ -14,6 +14,7 @@
 #import "StartLayer.h"
 #import "EndLayer.h"
 #import "UserData.h"
+#import "SimpleAudioEngine+MusicAndEffect.h"
 #import <CoreMotion/CoreMotion.h>
 
 @interface GameLayer()
@@ -95,7 +96,7 @@ static BOOL isEnter=NO;
 {
     self.pauseItem=[CCMenuItemImage itemWithNormalImage:@"pauseButton.png" selectedImage:@"pauseButton.png" target:self selector:@selector(pauseGame:)];
     self.pauseItem.anchorPoint=CGPointZero;
-    self.pauseItem.position=CGPointZero;
+    self.pauseItem.position=CGPointMake(0, 0);
     CCMenu* menu= [CCMenu menuWithItems:self.pauseItem, nil];
     menu.position=CGPointZero;
     [self addChild:menu];
@@ -130,8 +131,13 @@ static BOOL isEnter=NO;
     int y;
     while (1)
     {
-        x=arc4random()% (int)(winSize.width-2*minDis()) +minDis();
-        y=arc4random()% (int)(winSize.height-2*minDis()) +minDis();
+        x=arc4random()% (int)(winSize.width-4*minDis()) +minDis()*2;
+        y=arc4random()% (int)(winSize.height-4*minDis()) +minDis()*2;
+        NSLog(@"%f %f",model.position.x,model.position.y+model.contentSize.height);
+        if ([Model getGameModel]==kRocker)
+        {
+            if (x>model.position.x+2*minDis() && y<model.position.y+model.contentSize.height+2*minDis()) continue;
+        }
         if (![snake isCollisionOnPosition:CGPointMake(x, y)]) break;
     }
     [food setPosition:CGPointMake(x, y)];
@@ -140,6 +146,7 @@ static BOOL isEnter=NO;
 
 -(void)eatFood
 {
+    [[SimpleAudioEngine sharedEngine] playEatEffect];
     [food removeFromParentAndCleanup:YES];
     [snake addBody];
     [self addFood];
@@ -164,6 +171,7 @@ static BOOL isEnter=NO;
 
 -(float) getDelayTime
 {
+    if (score>30) return 1.0/200;
     if (score>20) return 1.0/150;
     if (score>15) return 1.0/100;
     if (score>10) return 1.0/80;
@@ -224,6 +232,7 @@ static BOOL isEnter=NO;
 
 -(void) returnHome:(id)sender
 {
+    [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer node];
     [[CCDirector sharedDirector] resume];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
@@ -231,11 +240,13 @@ static BOOL isEnter=NO;
 
 -(void) resumeNewGame:(id)sender
 {
+    [[SimpleAudioEngine sharedEngine] playBackEffect];
     [self restart];
 }
 
 -(void) resumeGame:(id)sender
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     [self.pauseLayer removeFromParentAndCleanup:YES];
     self.pauseLayer=nil;
     self.isPause=NO;
@@ -244,6 +255,8 @@ static BOOL isEnter=NO;
 
 -(void) pauseGame:(id)sender
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
+    if (self.isPause) return;
     self.isPause=YES;
     [[CCDirector sharedDirector] pause];
     [self addChild:self.pauseLayer];

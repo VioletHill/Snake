@@ -10,6 +10,7 @@
 // Import the interfaces
 #import "IntroLayer.h"
 #import "StartLayer.h"
+#import "SimpleAudioEngine.h"
 
 
 #pragma mark - IntroLayer
@@ -31,6 +32,14 @@
 	
 	// return the scene
 	return scene;
+}
+
+-(void) preloadSound
+{
+    [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"background.mp3"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"eat.wav"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"button.wav"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"back.wav"];
 }
 
 // 

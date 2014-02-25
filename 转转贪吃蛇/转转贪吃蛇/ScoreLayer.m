@@ -10,6 +10,7 @@
 #import "UserData.h"
 #import "CCLabelTTF+ScoreLable.h"
 #import "StartLayer.h"
+#import "SimpleAudioEngine+MusicAndEffect.h"
 
 @implementation ScoreLayer
 {
@@ -110,6 +111,7 @@
 
 -(void) returnToStartLayer
 {
+     [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer scene];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }

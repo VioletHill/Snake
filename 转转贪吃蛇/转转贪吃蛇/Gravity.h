@@ -12,5 +12,9 @@
 
 @interface Gravity : Model
 
+-(void) openMotionManager;
+-(void) closeMotionManager;
+
++(BOOL) isDeviceMotionAvailable;
 
 @end

@@ -10,13 +10,18 @@
 #import "Snake.h"
 #import "Food.h"
 #import "Rocker.h"
+#import "Gravity.h"
 #import "StartLayer.h"
+#import "EndLayer.h"
+#import "UserData.h"
 #import <CoreMotion/CoreMotion.h>
 
 @interface GameLayer()
 
 @property (nonatomic,assign) CCMenuItemImage* pauseItem;
 @property (nonatomic,assign) CCLayer* pauseLayer;
+
+@property (nonatomic) BOOL isPause;
 
 @end
 
@@ -55,20 +60,22 @@ static BOOL isEnter=NO;
         [self addBg];
         [self addPause];
         [self addModel];
-        
-//        snake=[Snake node];
-//        snake.position=CGPointMake(winSize.width/2, winSize.height/2);
-//        [self addChild:snake];
-//        [self addFood];
         [self restart];
     }
     return self;
 }
 
+-(void) setIsPause:(BOOL)isPause
+{
+    _isPause=isPause;
+    if (_isPause==NO)
+    {
+        [self updateSnake];
+    }
+}
+
 -(void)restart
 {
-    score=0;
-    
     [food removeFromParent];
     [snake removeFromParent];
     
@@ -104,8 +111,8 @@ static BOOL isEnter=NO;
 {
     model=[Model instanceTypeWithGameModel:[Model getGameModel]];
     
-        model.position=CGPointMake(winSize.width-model.contentSize.width, 100);
-        [self addChild:model];
+    model.position=CGPointMake(winSize.width-model.contentSize.width-50, 50);
+    [self addChild:model];
 }
 
 -(void)addFood
@@ -149,14 +156,17 @@ static BOOL isEnter=NO;
 
 -(float) getDelayTime
 {
-    //return 1.0/100;
-    return 1.0/(40.0+score);
+    if (score>20) return 1.0/150;
+    if (score>15) return 1.0/100;
+    if (score>10) return 1.0/80;
+    if (score>5) return 1.0/55;
+    return 1.0/40;
 }
 
--(void)updateSnake:(ccTime)delta
+-(void)updateSnake
 {
-    [self performSelector:@selector(updateSnake:) withObject:self afterDelay:[self getDelayTime]];
-
+    if (self.isPause) return;
+    [self performSelector:@selector(updateSnake) withObject:self afterDelay:[self getDelayTime]];
     if ([self isCollision])
     {
         [self endGame];
@@ -201,7 +211,6 @@ static BOOL isEnter=NO;
 -(void) returnHome:(id)sender
 {
     CCScene* scene=[StartLayer node];
-    [self unscheduleUpdate];
     [[CCDirector sharedDirector] resume];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
 }
@@ -215,30 +224,22 @@ static BOOL isEnter=NO;
 {
     [self.pauseLayer removeFromParentAndCleanup:YES];
     self.pauseLayer=nil;
+    self.isPause=NO;
     [[CCDirector sharedDirector] resume];
 }
 
 -(void) pauseGame:(id)sender
 {
+    self.isPause=YES;
     [[CCDirector sharedDirector] pause];
     [self addChild:self.pauseLayer];
 }
 
 -(void) endGame
 {
-    [self unscheduleUpdate];
-    [self addChild:[self endGameLayer]];
-}
-
--(CCLayer*)endGameLayer
-{
-    CCLayer* endGameLayer=[CCLayer node];
-    
-    CCSprite* bg=[CCSprite spriteWithFile:@"endBackground.png"];
-     bg.position=CGPointMake(endGameLayer.contentSize.width/2, endGameLayer.contentSize.height/2);
-    [endGameLayer addChild:bg];
-    
-    return endGameLayer;
+    self.isPause=YES;
+    [[UserData sharedUserData] setThisTimeScore:score*100 inModel:[Model getGameModel]];
+    [[CCDirector sharedDirector] replaceScene:[EndLayer node]];
 }
 
 +(BOOL) isEnter
@@ -252,13 +253,13 @@ static BOOL isEnter=NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame:) name:@"EnterBackgroundObserver" object:nil];
     isEnter=YES;
-    [self updateSnake:0.1];
-   // [self scheduleUpdate];
+    [self updateSnake];
 }
 
 -(void) onExit
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
+    [model purgeModel];
     isEnter=NO;
     [super onExit];
 }

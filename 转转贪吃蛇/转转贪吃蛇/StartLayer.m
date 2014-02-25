@@ -10,6 +10,8 @@
 #import "InforLayer.h"
 #import "GameLayer.h"
 #import "Model.h"
+#import "Gravity.h"
+#import "ScoreLayer.h"
 
 @interface StartLayer ()
 
@@ -108,7 +110,7 @@
 {
     if (_gravityModelItem==nil)
     {
-        _gravityModelItem=[CCMenuItemImage itemWithNormalImage:@"gravityModel.png" selectedImage:@"gravityModel.png" target:self selector:@selector(gravityMenu:)];
+        _gravityModelItem=[CCMenuItemImage itemWithNormalImage:@"gravityModel.png" selectedImage:@"gravityModelSelect.png" target:self selector:@selector(gravityMenu:)];
         _gravityModelItem.anchorPoint=CGPointMake(0, 0.5);
         _gravityModelItem.position=CGPointMake(winSize.width/2, winSize.height+_gravityModelItem.contentSize.height);
     }
@@ -119,7 +121,7 @@
 {
     if (_rockerModelItem==nil)
     {
-        _rockerModelItem=[CCMenuItemImage itemWithNormalImage:@"rockerModel.png" selectedImage:@"rockerModel.png" target:self selector:@selector(rockerMenu:)];
+        _rockerModelItem=[CCMenuItemImage itemWithNormalImage:@"rockerModel.png" selectedImage:@"rockerModelSelect.png" target:self selector:@selector(rockerMenu:)];
         _rockerModelItem.anchorPoint=CGPointMake(1, 0.5);
         _rockerModelItem.position=CGPointMake(winSize.width/2, winSize.height+_rockerModelItem.contentSize.height);
     }
@@ -355,14 +357,24 @@
 
 -(void)scoreMenu:(CCNode*)pSender
 {
-    
+    CCScene* highScoreScene=[ScoreLayer scene];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:highScoreScene]];
 }
 
 -(void)gravityMenu:(CCNode*)pSender
 {
-    [Model setGameModel:kGravity];
-    CCScene* scene = [GameLayer node];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    if ([Gravity isDeviceMotionAvailable])
+    {
+        [Model setGameModel:kGravity];
+        CCScene* scene = [GameLayer node];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    }
+    else
+    {
+        UIAlertView* alert=[[UIAlertView alloc] initWithTitle:@"错误" message:@"Sorry！您的设备不支持重力模式，建议您使用摇杆模式,感谢您的关注" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 -(void)rockerMenu:(CCNode*)pSender

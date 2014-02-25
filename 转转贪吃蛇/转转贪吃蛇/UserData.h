@@ -19,4 +19,10 @@
 -(BOOL) isNewRecord:(int)score inModel:(GameModel)model;
 
 
+-(void) setThisTimeScore:(int)score inModel:(GameModel)model;
+
+-(int) getThisTimeScore;
+
+-(GameModel)getThisTimeModel;
+
 @end

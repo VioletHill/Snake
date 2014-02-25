@@ -25,7 +25,7 @@ static GameModel gameModel=kRocker;
     gameModel=model;
 }
 
-+(GameModel*)getGameModel
++(GameModel)getGameModel
 {
     return gameModel;
 }
@@ -33,6 +33,18 @@ static GameModel gameModel=kRocker;
 -(Vector) getDirctionVector
 {
     return VHMakeVector(0, 0);
+}
+
+-(void)purgeModel
+{
+    if ([Model getGameModel]==kGravity)
+    {
+        [(Gravity*)self closeMotionManager];
+    }
+    else
+    {
+        [self removeFromParentAndCleanup:YES];
+    }
 }
 
 -(BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event

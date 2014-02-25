@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "IntroLayer.h"
 #import "GameLayer.h"
+#import "LocalNotification.h"
 
 @implementation MyNavigationController
 
@@ -61,6 +62,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Create the main window
+    [[LocalNotification sharedLoaclNotification] cancelNotifation];
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	
@@ -151,6 +153,7 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
+    application.applicationIconBadgeNumber=0;
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
 	if( [navController_ visibleViewController] == director_ && ![GameLayer isEnter])
 		[director_ resume];
@@ -158,12 +161,14 @@
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
+    [[LocalNotification sharedLoaclNotification] pushNotifation];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
+    [[LocalNotification sharedLoaclNotification] cancelNotifation];
 	if( [navController_ visibleViewController] == director_)
 		[director_ startAnimation];
 }
@@ -172,6 +177,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	CC_DIRECTOR_END();
+    [[LocalNotification sharedLoaclNotification] pushNotifation];
 }
 
 // purge memory
@@ -184,6 +190,11 @@
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+}
+
+-(void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    application.applicationIconBadgeNumber=0;
 }
 
 - (void) dealloc

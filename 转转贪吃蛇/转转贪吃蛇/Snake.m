@@ -58,13 +58,12 @@ const float maxAngel=3;
 {
     if (self=[super init])
     {
-        speed=4;
+        speed=3;
         CCSprite* head=[CCSprite spriteWithFile:@"snakeHead.png"];
         head.zOrder=1;
         head.position=CGPointMake(0, 0);
         [self.body addObject:head];
         [self addChild:head];
-        
         [self addBody];
     }
     return self;
@@ -123,7 +122,7 @@ const float maxAngel=3;
     if (self.moveVector.count<=index) return ;
     NSMutableArray* moveDirection=[self.moveVector objectAtIndex:index];
     NSNumber* dis=[moveDirection firstObject];
-    NSLog(@"%f",getVectorLength(dir.v));
+   // NSLog(@"%f",getVectorLength(dir.v));
     if ([dis floatValue]<50.0)
     {
         dis=@([dis floatValue]+getVectorLength(dir.v));

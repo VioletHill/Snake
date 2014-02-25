@@ -9,6 +9,10 @@
 #import "UserData.h"
 
 @implementation UserData
+{
+    GameModel thisTimeModel;
+    int thisTimeScore;
+}
 
 static UserData* userData=nil;
 +(UserData*) sharedUserData
@@ -40,7 +44,8 @@ static UserData* userData=nil;
 
 -(int) getRecordInModel:(GameModel)model
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:[self getModelString:model]];
+    id obj=[[NSUserDefaults standardUserDefaults] objectForKey:[self getModelString:model]];
+    return [obj intValue];
 }
 
 -(BOOL) isNewRecord:(int)score inModel:(GameModel)model
@@ -50,5 +55,20 @@ static UserData* userData=nil;
     else return NO;
 }
 
+-(void)setThisTimeScore:(int)score inModel:(GameModel)model
+{
+    thisTimeModel=model;
+    thisTimeScore=score;
+}
+
+-(GameModel) getThisTimeModel
+{
+    return thisTimeModel;
+}
+
+-(int) getThisTimeScore
+{
+    return thisTimeScore;
+}
 
 @end

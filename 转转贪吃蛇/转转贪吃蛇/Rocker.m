@@ -32,6 +32,7 @@
     if (_touchSprite==nil)
     {
         _touchSprite=[CCSprite spriteWithFile:@"rockerPoint.png"];
+        _touchSprite.opacity=122;
         _touchSprite.position=CGPointMake(self.contentSize.width/2, self.contentSize.height/2);
         [self addChild:_touchSprite];
     }
@@ -42,6 +43,7 @@
 -(void) addBg
 {
     CCSprite* bg=[CCSprite spriteWithFile:@"rockerBg.png"];
+    bg.opacity=122;
     self.contentSize=bg.contentSize;
     bg.position=CGPointMake(self.contentSize.width/2,self.contentSize.height/2);
     [self addChild:bg];
@@ -51,7 +53,7 @@
 
 -(Vector) getDirctionVector
 {
-    return VHMakeVector(self.touchSprite.position.x-self.contentSize.width/2, self.touchSprite.position.y-self.contentSize.height/2);
+    return  VHMakeVector(self.touchSprite.position.x-self.contentSize.width/2, self.touchSprite.position.y-self.contentSize.height/2);
 }
 
 #pragma mark - touch

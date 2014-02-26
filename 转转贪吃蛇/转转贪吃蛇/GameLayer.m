@@ -15,6 +15,7 @@
 #import "EndLayer.h"
 #import "UserData.h"
 #import "SimpleAudioEngine+MusicAndEffect.h"
+#import "GameKitHelper.h"
 #import <CoreMotion/CoreMotion.h>
 
 @interface GameLayer()
@@ -25,6 +26,8 @@
 @property (nonatomic) BOOL isPause;
 
 @end
+
+
 
 @implementation GameLayer
 {
@@ -37,13 +40,22 @@
 
 static BOOL isEnter=NO;
 
+static GameLayer* layer=nil;
++(GameLayer*) layer
+{
+    return layer;
+}
+
 +(CCScene *) scene
 {
+    if ([GameLayer layer]!=nil) return nil;
+    
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	GameLayer *layer = [GameLayer node];
+   
+	layer = [GameLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -78,15 +90,18 @@ static BOOL isEnter=NO;
 -(void)restart
 {
     score=0;
-    [food removeFromParent];
-    [snake removeFromParent];
+    [food removeFromParentAndCleanup:YES];
+    [snake removeFromParentAndCleanup:YES];
+    
+
     
     snake=[Snake node];
     snake.position=CGPointMake(winSize.width/2, winSize.height/2);
     [self addChild:snake];
     [self addFood];
-    
-    if ([CCDirector sharedDirector].isPaused)
+   
+    self.isPause=YES;
+    if (self.isPause)
     {
         [self resumeGame:nil];
     }
@@ -167,33 +182,39 @@ static BOOL isEnter=NO;
     if (snakePosition.y<=minDis()/2) return YES;
     if (snakePosition.y>=winSize.height-minDis()/2) return YES;
     return [snake isEatSelf];
+    
 }
 
 -(float) getDelayTime
 {
-    if (score>30) return 1.0/200;
-    if (score>20) return 1.0/150;
-    if (score>15) return 1.0/100;
-    if (score>10) return 1.0/80;
-    if (score>5) return 1.0/55;
+    if (score>35) return 1.0/300;
+    if (score>25) return 1.0/200;
+    if (score>20) return 1.0/100.0;
+    if (score>15) return 1.0/80;
+    if (score>10) return 1.0/60;
+    if (score>5) return 1.0/50;
     return 1.0/40;
 }
 
 -(void)updateSnake
 {
     if (self.isPause) return;
+    
     [self performSelector:@selector(updateSnake) withObject:self afterDelay:[self getDelayTime]];
+    
     if ([self isCollision])
     {
         [self endGame];
         return ;
     }
+    
+    [snake move:model.getDirctionVector];
+    
     if ([self isEatFood])
     {
         [self eatFood];
         score++;
     }
-    [snake move:model.getDirctionVector];
 }
 
 
@@ -245,8 +266,12 @@ static BOOL isEnter=NO;
 {
     [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer node];
+    [[CCDirector sharedDirector] resume];       //why ccdirectior pause will be back i don't know?
+    
+    [[CCDirector sharedDirector] pause];
     [[CCDirector sharedDirector] resume];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    
+    [[CCDirector sharedDirector] replaceScene:scene];
 }
 
 -(void) resumeNewGame:(id)sender
@@ -262,14 +287,19 @@ static BOOL isEnter=NO;
     self.pauseLayer=nil;
     self.isPause=NO;
     [[CCDirector sharedDirector] resume];
+    
+    [[CCDirector sharedDirector] pause];
+    [[CCDirector sharedDirector] resume];
 }
 
 -(void) pauseGame:(id)sender
 {
      [[SimpleAudioEngine sharedEngine] playBackEffect];
     if (self.isPause) return;
-    self.isPause=YES;
+    
     [[CCDirector sharedDirector] pause];
+    self.isPause=YES;
+   
     [self addChild:self.pauseLayer];
 }
 
@@ -287,16 +317,15 @@ static BOOL isEnter=NO;
 
 -(void) onEnter
 {
+    NSLog(@"onenter");
     [super onEnter];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame:) name:@"EnterBackgroundObserver" object:nil];
     isEnter=YES;
-    [self updateSnake];
 }
 
 -(void) onExit
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnterBackgroundObserver" object:nil];
+    NSLog(@"onexit");
+    layer=nil;
     [model purgeModel];
     isEnter=NO;
     [super onExit];

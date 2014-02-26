@@ -12,6 +12,7 @@
 #import "GameLayer.h"
 #import "SimpleAudioEngine+MusicAndEffect.h"
 #import "CCLabelTTF+ScoreLable.h"
+#import "GameKitHelper.h"
 
 @implementation EndLayer
 {
@@ -39,13 +40,16 @@
 {
     if (self=[super init])
     {
-        
+    
         winSize=[[CCDirector sharedDirector] winSize];
         
         [self addBg];
         [self addScore];
         [self addRecordScore];
         [self addBack];
+        
+        int totScore=[[UserData sharedUserData] getRecordInModel:kGravity]+[[UserData sharedUserData] getRecordInModel:kRocker];
+        [[GameKitHelper sharedGameKitHelper] submitScore:totScore];
     }
     return self;
 }
@@ -124,14 +128,14 @@
 {
      [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer scene];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    [[CCDirector sharedDirector] replaceScene:scene];
 }
 
 -(void) retry
 {
      [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[GameLayer scene];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    [[CCDirector sharedDirector] replaceScene:scene];
 }
 
 

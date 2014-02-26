@@ -12,6 +12,7 @@
 #import "Model.h"
 #import "Gravity.h"
 #import "ScoreLayer.h"
+#import "GameKitHelper.h"
 #import "SimpleAudioEngine+MusicAndEffect.h"
 
 @interface StartLayer ()
@@ -31,6 +32,7 @@
 @implementation StartLayer
 {
     CGSize winSize;
+    BOOL isTouchEnable;
 }
 
 +(CCScene *) scene
@@ -52,6 +54,7 @@
 {
     if (self=[super init])
     {
+        isTouchEnable=YES;
         winSize=[[CCDirector sharedDirector] winSize];
         [self addBg];
         [self addMenu];
@@ -181,6 +184,11 @@
 -(ccTime) moveDuration
 {
     return 0.5;
+}
+
+-(ccTime) getMaxMoveDelay
+{
+    return 0.2+[self moveDuration];
 }
 
 -(ccTime) moveDelay:(CCNode*)pSender
@@ -346,6 +354,7 @@
     [self moveIninforItem];
     [self moveInScoreItem];
     [self moveInTitle];
+    [self performSelector:@selector(setMenuTouchEnable) withObject:self afterDelay:[self getMaxMoveDelay]];
 }
 
 -(void) moveStartMenuOut
@@ -361,6 +370,7 @@
     [self moveInGravityItem];
     [self moveInRockerItem];
     [self moveInReturnItem];
+    [self performSelector:@selector(setMenuTouchEnable) withObject:self afterDelay:[self getMaxMoveDelay]];
 }
 
 -(void)moveChoseOut
@@ -390,9 +400,16 @@
 
 #pragma mark - Item select
 
+-(void) setMenuTouchEnable
+{
+    isTouchEnable=YES;
+}
 
 -(void)startMenu:(CCNode*)pSender
 {
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    
     [[SimpleAudioEngine sharedEngine] playButtonEffect];
     [self moveStartMenuOut];
     [self moveChoseIn];
@@ -400,27 +417,36 @@
 
 -(void)inforMenu:(CCNode*)pSender
 {
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    
     [[SimpleAudioEngine sharedEngine] playButtonEffect];
     CCScene* inforScene=[InforLayer scene];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:inforScene]];
+    [[CCDirector sharedDirector] replaceScene:inforScene];
 }
 
 -(void)scoreMenu:(CCNode*)pSender
 {
     
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    
     [[SimpleAudioEngine sharedEngine] playButtonEffect];
     CCScene* highScoreScene=[ScoreLayer scene];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:highScoreScene]];
+    [[CCDirector sharedDirector] replaceScene:highScoreScene];
 }
 
 -(void)gravityMenu:(CCNode*)pSender
 {
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    
     [[SimpleAudioEngine sharedEngine] playButtonEffect];
     if ([Gravity isDeviceMotionAvailable])
     {
         [Model setGameModel:kGravity];
         CCScene* scene = [GameLayer node];
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+        [[CCDirector sharedDirector] replaceScene:scene];
     }
     else
     {
@@ -432,14 +458,21 @@
 
 -(void)rockerMenu:(CCNode*)pSender
 {
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    NSLog(@"touch");
+    
     [[SimpleAudioEngine sharedEngine] playButtonEffect];
     [Model setGameModel:kRocker];
     CCScene* scene = [GameLayer node];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.4 scene:scene]];
+    [[CCDirector sharedDirector] replaceScene:scene];
 }
 
 -(void)returnMenu:(CCNode*)pSender
 {
+    if (!isTouchEnable) return  ;
+    isTouchEnable=NO;
+    
     [[SimpleAudioEngine sharedEngine] playBackEffect];
     [self moveChoseOut];
     [self performSelector:@selector(moveStartMenuIn) withObject:self afterDelay:[self moveDuration]];
@@ -448,6 +481,7 @@
 -(void) onEnter
 {
     [super onEnter];
+        
     [[SimpleAudioEngine sharedEngine] playBgm];
 }
 

@@ -56,7 +56,7 @@
 		2419C33018BC657000A03C36 /* gameoverRetry.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C32C18BC657000A03C36 /* gameoverRetry.png */; };
 		2419C33118BC657000A03C36 /* gameoverRetrySelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C32D18BC657000A03C36 /* gameoverRetrySelect.png */; };
 		2419C33218BC657000A03C36 /* gameoverReturn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C32E18BC657000A03C36 /* gameoverReturn.png */; };
-		2419C33318BC657000A03C36 /* gameoverSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C32F18BC657000A03C36 /* gameoverSelect.png */; };
+		2419C33318BC657000A03C36 /* gameoverReturnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C32F18BC657000A03C36 /* gameoverReturnSelect.png */; };
 		2419C33918BC65EF00A03C36 /* endBackground-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C33818BC65EF00A03C36 /* endBackground-ipadhd.png */; };
 		2419C33E18BC665600A03C36 /* gameoverRetry-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C33A18BC665600A03C36 /* gameoverRetry-ipadhd.png */; };
 		2419C33F18BC665600A03C36 /* gameoverRetrySelect-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2419C33B18BC665600A03C36 /* gameoverRetrySelect-ipadhd.png */; };
@@ -410,6 +410,8 @@
 		24D486A5186962DF00E27AED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D486A4186962DF00E27AED /* AppDelegate.m */; };
 		24D486AB186962DF00E27AED /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D486AA186962DF00E27AED /* IntroLayer.m */; };
 		24D486B7186964AD00E27AED /* StartLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D486B6186964AD00E27AED /* StartLayer.m */; };
+		24D9DADA18BDDA5100483C63 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D9DAD918BDDA5100483C63 /* GameKitHelper.m */; };
+		24D9DADC18BDE53E00483C63 /* pauseBackground-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 24D9DADB18BDE53E00483C63 /* pauseBackground-hd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -464,7 +466,7 @@
 		2419C32C18BC657000A03C36 /* gameoverRetry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverRetry.png; sourceTree = "<group>"; };
 		2419C32D18BC657000A03C36 /* gameoverRetrySelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverRetrySelect.png; sourceTree = "<group>"; };
 		2419C32E18BC657000A03C36 /* gameoverReturn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverReturn.png; sourceTree = "<group>"; };
-		2419C32F18BC657000A03C36 /* gameoverSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverSelect.png; sourceTree = "<group>"; };
+		2419C32F18BC657000A03C36 /* gameoverReturnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverReturnSelect.png; sourceTree = "<group>"; };
 		2419C33818BC65EF00A03C36 /* endBackground-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "endBackground-ipadhd.png"; sourceTree = "<group>"; };
 		2419C33A18BC665600A03C36 /* gameoverRetry-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameoverRetry-ipadhd.png"; sourceTree = "<group>"; };
 		2419C33B18BC665600A03C36 /* gameoverRetrySelect-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameoverRetrySelect-ipadhd.png"; sourceTree = "<group>"; };
@@ -976,6 +978,9 @@
 		24D486AA186962DF00E27AED /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		24D486B5186964AD00E27AED /* StartLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartLayer.h; sourceTree = "<group>"; };
 		24D486B6186964AD00E27AED /* StartLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartLayer.m; sourceTree = "<group>"; };
+		24D9DAD818BDDA5100483C63 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
+		24D9DAD918BDDA5100483C63 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
+		24D9DADB18BDE53E00483C63 /* pauseBackground-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseBackground-hd.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1120,7 +1125,7 @@
 				2419C32C18BC657000A03C36 /* gameoverRetry.png */,
 				2419C32D18BC657000A03C36 /* gameoverRetrySelect.png */,
 				2419C32E18BC657000A03C36 /* gameoverReturn.png */,
-				2419C32F18BC657000A03C36 /* gameoverSelect.png */,
+				2419C32F18BC657000A03C36 /* gameoverReturnSelect.png */,
 				24B2372718BB986300C7CACD /* endBackground.png */,
 			);
 			name = Gameover;
@@ -1424,6 +1429,7 @@
 		243FA20318B8980100B78058 /* Pause */ = {
 			isa = PBXGroup;
 			children = (
+				24D9DADB18BDE53E00483C63 /* pauseBackground-hd.png */,
 				2419C43D18BCF2DE00A03C36 /* pauseButton-hd.png */,
 				2419C43E18BCF2DE00A03C36 /* pauseButtonSelect-hd.png */,
 				243FA20418B8982900B78058 /* pauseContinue-hd.png */,
@@ -1776,6 +1782,7 @@
 				24D486A4186962DF00E27AED /* AppDelegate.m */,
 				24D486A9186962DF00E27AED /* IntroLayer.h */,
 				24D486AA186962DF00E27AED /* IntroLayer.m */,
+				24D9DAD418BDD59E00483C63 /* GameCenter */,
 				2419C41418BCD97000A03C36 /* cocos2dCategory */,
 				24B236E518BB480600C7CACD /* Notification */,
 				243D90C81871AC7B00A846F5 /* UserData */,
@@ -2217,6 +2224,15 @@
 			name = InforLayer;
 			sourceTree = "<group>";
 		};
+		24D9DAD418BDD59E00483C63 /* GameCenter */ = {
+			isa = PBXGroup;
+			children = (
+				24D9DAD818BDDA5100483C63 /* GameKitHelper.h */,
+				24D9DAD918BDDA5100483C63 /* GameKitHelper.m */,
+			);
+			name = GameCenter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2245,6 +2261,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "邱峰";
+				TargetAttributes = {
+					24D484FA186962DD00E27AED = {
+						DevelopmentTeam = L7389V69LB;
+					};
+				};
 			};
 			buildConfigurationList = 24D484F6186962DD00E27AED /* Build configuration list for PBXProject "转转贪吃蛇" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2293,7 +2314,7 @@
 				243FA22518B89B4400B78058 /* snakeHead-hd.png in Resources */,
 				2419C41A18BCF04900A03C36 /* highestScore-hd.png in Resources */,
 				2419C3E118BC927E00A03C36 /* lastInforSelect-ipad.png in Resources */,
-				2419C33318BC657000A03C36 /* gameoverSelect.png in Resources */,
+				2419C33318BC657000A03C36 /* gameoverReturnSelect.png in Resources */,
 				2419C42718BCF11B00A03C36 /* rockerModel-iphone5hd.png in Resources */,
 				243FA22C18B89BAD00B78058 /* rockerBg-hd.png in Resources */,
 				24B2371818BB957E00C7CACD /* gravityModelSelect.png in Resources */,
@@ -2456,6 +2477,7 @@
 				2419C3BB18BC907B00A03C36 /* pauseButtonSelect-ipad.png in Resources */,
 				24A99EBC18B774890062FA5B /* title-iphone5hd.png in Resources */,
 				2419C2FD18BC564500A03C36 /* highScoreBack.png in Resources */,
+				24D9DADC18BDE53E00483C63 /* pauseBackground-hd.png in Resources */,
 				24B2375018BBA07A00C7CACD /* gameLayerBg-hd.png in Resources */,
 				240F47C818BA070600CAB141 /* nextInforSelect-ipadhd.png in Resources */,
 				24B2374118BB9BA700C7CACD /* food1.png in Resources */,
@@ -2569,6 +2591,7 @@
 				24D48547186962DD00E27AED /* CCActionManager.m in Sources */,
 				2419C2E018BC387700A03C36 /* CCLabelTTF+ScoreLable.m in Sources */,
 				24D485AF186962DE00E27AED /* CCParticleSystemQuad.m in Sources */,
+				24D9DADA18BDDA5100483C63 /* GameKitHelper.m in Sources */,
 				24D48572186962DD00E27AED /* CCDrawNode.m in Sources */,
 				24D48604186962DE00E27AED /* CCTransitionPageTurn.m in Sources */,
 				24D48535186962DD00E27AED /* CCActionCatmullRom.m in Sources */,
@@ -2691,7 +2714,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = Snake;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2711,7 +2734,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = Snake;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2725,6 +2748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2737,6 +2761,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = Snake;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2748,6 +2773,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "转转贪吃蛇/Prefix.pch";
@@ -2759,6 +2785,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = Snake;
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

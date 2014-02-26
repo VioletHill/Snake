@@ -76,15 +76,9 @@ NS_INLINE float VHVectorGetAngle(Vector a, Vector b)
     if ( getVectorLength(a)*getVectorLength(b) == 0 ) return 0;
    // a=VHMakeOneDistanceVectorByPoint(0.016215, 1.199890);
    // b=VHMakeOneDistanceVectorByPoint(0.016437, 1.99888);
-    float x=acos( vectorDotProduct(a, b)/ (getVectorLength(a)*getVectorLength(b) ) );
-    NSLog(@"a:%f %f , b:%f %f, acos:%f",a.x,a.y,b.x,b.y, x);
+    //float x=acos( vectorDotProduct(a, b)/ (getVectorLength(a)*getVectorLength(b) ) );
+    //NSLog(@"a:%f %f , b:%f %f, acos:%f",a.x,a.y,b.x,b.y, x);
      //a:0.016215 1.199890 , b:0.016437 1.199888
-    if (x>100.0)
-    {
-        int i=0;
-        i++;
-        x=0;
-    }
     //return x;
     return CC_RADIANS_TO_DEGREES(acos( vectorDotProduct(a, b)/ (getVectorLength(a)*getVectorLength(b) ) ));
 }
@@ -127,6 +121,10 @@ NS_INLINE BOOL isCollision(CGPoint a, CGPoint b)
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 
++(GameLayer*) layer;
+
 +(BOOL) isEnter;
+
+-(void) pauseGame:(id)sender;
 
 @end

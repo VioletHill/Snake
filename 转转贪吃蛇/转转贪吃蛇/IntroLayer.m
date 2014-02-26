@@ -11,7 +11,7 @@
 #import "IntroLayer.h"
 #import "StartLayer.h"
 #import "SimpleAudioEngine.h"
-
+#import "GameKitHelper.h"
 
 #pragma mark - IntroLayer
 
@@ -63,6 +63,9 @@
 -(void) onEnter
 {
 	[super onEnter];
+  
+    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+    
 	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[StartLayer scene] ]];
 }
 @end

@@ -18,6 +18,7 @@
 
 @implementation Direction
 
+
 +(Direction*) makeDirection:(Vector)v
 {
     Direction* dir=[[[Direction alloc] init] autorelease];
@@ -46,6 +47,7 @@
                         //speed 变化太大会导致蛇蛇分离  解决办法是增加刷新频率 不改变speed大小 但是这样好吗？
     
                         //* speed 属性已经被废除 全部=1  修改刷新频率增加速度
+    
 }
 
 @synthesize body=_body;
@@ -60,7 +62,7 @@ const float maxAngel=3;
     {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
         {
-            speed=6;
+            speed=5;
         }
         else
         {
@@ -191,6 +193,7 @@ const float maxAngel=3;
             
         }
     }
+  //  [head runAction:[CCMoveTo actionWithDuration:moveTime position:CGPointMake(head.position.x + nextDirection.x, head.position.y + nextDirection.y)]];
     head.position=CGPointMake(head.position.x + nextDirection.x, head.position.y + nextDirection.y);
     lastDirection=nextDirection;
     
@@ -225,6 +228,7 @@ const float maxAngel=3;
         {
             Vector next=((Direction*)[moveArray objectAtIndex:1]).v;
             nowMoveBody.position=CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y);
+           // [nowMoveBody runAction:[CCMoveTo actionWithDuration:moveTime position:CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y)]];
             [self removeDirectionAtIndex:i-1];
             [self addDirection:[Direction makeDirection:next] atIndex:i];
         }
@@ -233,8 +237,10 @@ const float maxAngel=3;
 
 -(void) move:(Vector)nextDirection
 {
+ 
     Vector vector;
     if (isZeroVector(nextDirection) && isZeroVector(lastDirection)) return; //没开始
+    
     
     if (isZeroVector(lastDirection)) lastDirection=VHMakeVector(0, -1);
     
@@ -281,6 +287,7 @@ const float maxAngel=3;
 
 -(void)onExit
 {
+    NSLog(@"snake exit");
     [self.body release];
     [self.moveVector release];
     [super onExit];

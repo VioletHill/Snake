@@ -12,6 +12,9 @@
 
 @interface Snake : CCSprite
 
+
+//-(void) move:(Vector)nextDirection withTime:(ccTime)time;
+
 -(void) move:(Vector)nextDirection;
 
 -(void) addBody;

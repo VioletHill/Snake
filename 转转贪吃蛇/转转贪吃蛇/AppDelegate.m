@@ -13,6 +13,7 @@
 #import "GameLayer.h"
 #import "LocalNotification.h"
 #import "UserData.h"
+#import "GameKitHelper.h"
 
 @implementation MyNavigationController
 
@@ -63,8 +64,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Create the main window
+
     [[UserData sharedUserData] setDefaultSetting];
     [[LocalNotification sharedLoaclNotification] cancelNotifation];
+    
     
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -95,7 +98,7 @@
 	director_.wantsFullScreenLayout = YES;
 	
 	// Display FSP and SPF
-	[director_ setDisplayStats:NO];
+	[director_ setDisplayStats:YES];
 	
 	// set FPS at 60
 	[director_ setAnimationInterval:1.0/60];
@@ -149,17 +152,27 @@
 -(void) applicationWillResignActive:(UIApplication *)application
 {
 	if( [navController_ visibleViewController] == director_ )
+    {
 		[director_ pause];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EnterBackgroundObserver" object:nil];
+    }
+    
+    if ([GameLayer isEnter])
+    {
+        [[GameLayer layer] pauseGame:nil];
+    }
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-    application.applicationIconBadgeNumber=0;
+    
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
-	if( [navController_ visibleViewController] == director_ && ![GameLayer isEnter])
+	if( [navController_ visibleViewController] == director_)
+    {
 		[director_ resume];
+        [director_ pause];
+        [director_ resume];
+    }
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
@@ -171,9 +184,14 @@
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
+    application.applicationIconBadgeNumber=0;
     [[LocalNotification sharedLoaclNotification] cancelNotifation];
 	if( [navController_ visibleViewController] == director_)
+    {
 		[director_ startAnimation];
+        [[CCDirector sharedDirector] pause];
+        [[CCDirector sharedDirector] resume];
+    }
 }
 
 // application will be killed

@@ -47,7 +47,6 @@
                         //speed 变化太大会导致蛇蛇分离  解决办法是增加刷新频率 不改变speed大小 但是这样好吗？
     
                         //* speed 属性已经被废除 全部=1  修改刷新频率增加速度
-    
 }
 
 @synthesize body=_body;
@@ -62,7 +61,7 @@ const float maxAngel=3;
     {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
         {
-            speed=5;
+            speed=6;
         }
         else
         {
@@ -96,6 +95,22 @@ const float maxAngel=3;
     return _moveVector;
 }
 
+-(void) addSpeed
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+    {
+        if ([self.body count]>12) speed=8;
+        else speed=6+(self.body.count-2)/10.0;
+    }
+    else
+    {
+        if ([self.body count]>=12) speed=4;
+        else speed=3+(self.body.count-2)/10.0;
+    }
+    NSLog(@"%f",speed);
+}
+
+
 -(void)addBody
 {
     CCSprite* body=[CCSprite spriteWithFile:@"body.png"];
@@ -107,6 +122,8 @@ const float maxAngel=3;
     NSMutableArray* dir=[[[NSMutableArray alloc] init] autorelease];
     [dir addObject:@(0)];
     [self.moveVector addObject:dir];
+    
+    [self addSpeed];
 }
 
 -(Vector) getMaxVector:(Vector)v withClockwise:(BOOL)clockwise andSpeed:(float)value
@@ -129,6 +146,7 @@ const float maxAngel=3;
 -(void) addDirection:(Direction*)dir atIndex:(NSUInteger)index
 {
     if (self.moveVector.count<=index) return ;
+
     NSMutableArray* moveDirection=[self.moveVector objectAtIndex:index];
     NSNumber* dis=[moveDirection firstObject];
    // NSLog(@"%f",getVectorLength(dir.v));
@@ -194,6 +212,7 @@ const float maxAngel=3;
         }
     }
   //  [head runAction:[CCMoveTo actionWithDuration:moveTime position:CGPointMake(head.position.x + nextDirection.x, head.position.y + nextDirection.y)]];
+    
     head.position=CGPointMake(head.position.x + nextDirection.x, head.position.y + nextDirection.y);
     lastDirection=nextDirection;
     
@@ -210,25 +229,40 @@ const float maxAngel=3;
         float minMoveDis=0;
         if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
         {
-            minMoveDis=nowMoveBody.contentSize.width-5;
+            if (i==1)
+            {
+                minMoveDis=nowMoveBody.contentSize.width-15;
+            }
+            else if (i<=12)
+            {
+                minMoveDis=nowMoveBody.contentSize.width/2+0.8*(i-2);
+            }
+            else
+            {
+                minMoveDis=nowMoveBody.contentSize.width-10;
+                
+            }
         }
         else
         {
-            
             if (i==1)
             {
-                minMoveDis=nowMoveBody.contentSize.width+5;
+                minMoveDis=nowMoveBody.contentSize.width+1;
+            }
+            else if (i<=12)
+            {
+                minMoveDis=nowMoveBody.contentSize.width/2+4+0.4*(i-2);
             }
             else
             {
                 minMoveDis=nowMoveBody.contentSize.width;
+
             }
         }
         if (dis>=minMoveDis)
         {
             Vector next=((Direction*)[moveArray objectAtIndex:1]).v;
             nowMoveBody.position=CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y);
-           // [nowMoveBody runAction:[CCMoveTo actionWithDuration:moveTime position:CGPointMake(nowMoveBody.position.x+next.x, nowMoveBody.position.y+next.y)]];
             [self removeDirectionAtIndex:i-1];
             [self addDirection:[Direction makeDirection:next] atIndex:i];
         }

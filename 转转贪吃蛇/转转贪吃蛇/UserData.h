@@ -9,7 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Model.h"
 
+typedef NS_ENUM(int, Evaluate)
+{
+    kNextTime=0,
+    kNever=1,
+};
+
 @interface UserData : NSObject
+
 
 +(UserData*) sharedUserData;
 +(void) purge;
@@ -30,6 +37,10 @@
 -(void) setIsNeedBackgroundMusic:(BOOL)is;
 -(void) setIsNeedEffect:(BOOL)is;
 
--(void) setDefaultSetting;
+-(void) setDefaultSetting;          //App lauch wil  call; and check userdefault 'isfirstlauch'
+
+-(void) setEvaluate:(Evaluate)evaluate;
+
+-(Evaluate) getEvaluteType;
 
 @end

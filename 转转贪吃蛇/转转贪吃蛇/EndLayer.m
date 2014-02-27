@@ -50,9 +50,48 @@
         
         int totScore=[[UserData sharedUserData] getRecordInModel:kGravity]+[[UserData sharedUserData] getRecordInModel:kRocker];
         [[GameKitHelper sharedGameKitHelper] submitScore:totScore];
+        
+        [self showEvaluate];
     }
     return self;
 }
+
+-(void) showEvaluate
+{
+    Evaluate evalute=[[UserData sharedUserData] getEvaluteType];
+    if (evalute==kNextTime)
+    {
+        UIAlertView* evalute=[[UIAlertView alloc] initWithTitle:nil message:@"老大~~喜欢我这条小蛇吗？喜欢我就去App Store为我评分吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"我再玩会",@"不再显示",@"欣然前往",nil];
+        [evalute show];
+        [evalute release];
+    }
+    else
+    {
+        return ;
+    }
+}
+
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0)
+    {
+        [[UserData sharedUserData] setEvaluate:kNextTime];
+    }
+    else if (buttonIndex==1)
+    {
+        
+        [[UserData sharedUserData] setEvaluate:kNever];
+    }
+    else if (buttonIndex==2)
+    {
+        
+        [[UserData sharedUserData] setEvaluate:kNever];
+        NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"813629612"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    }
+}
+
 
 -(void)addBg
 {

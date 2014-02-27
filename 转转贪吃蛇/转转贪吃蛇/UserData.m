@@ -96,6 +96,16 @@ static UserData* userData=nil;
     [[NSUserDefaults standardUserDefaults] setBool:is forKey:@"isNeedEffect"];
 }
 
+-(void) setEvaluate:(Evaluate)evaluate
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@((int)evaluate) forKey:@"Evaluate"];
+}
+
+-(Evaluate) getEvaluteType
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"Evaluate"];
+}
+
 -(void) setDefaultSetting
 {
     BOOL isFirstLaunch=![[[NSUserDefaults standardUserDefaults] objectForKey:@"isFirstLaunch"] boolValue];
@@ -104,6 +114,7 @@ static UserData* userData=nil;
         [self setIsNeedEffect:YES];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isNeedBgm"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isFirstLaunch"];
+        [self setEvaluate:kNextTime];
     }
 }
 

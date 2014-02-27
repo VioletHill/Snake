@@ -83,7 +83,7 @@ static GameLayer* layer=nil;
     _isPause=isPause;
     if (_isPause==NO)
     {
-        [self updateSnake];
+        
     }
 }
 
@@ -93,7 +93,8 @@ static GameLayer* layer=nil;
     [food removeFromParentAndCleanup:YES];
     [snake removeFromParentAndCleanup:YES];
     
-
+  //  [self schedule:@selector(updateSnake)];
+    [self schedule:@selector(updateSnake)];
     
     snake=[Snake node];
     snake.position=CGPointMake(winSize.width/2, winSize.height/2);
@@ -187,12 +188,12 @@ static GameLayer* layer=nil;
 
 -(float) getDelayTime
 {
-    if (score>35) return 1.0/300;
-    if (score>25) return 1.0/200;
-    if (score>20) return 1.0/100.0;
-    if (score>15) return 1.0/80;
-    if (score>10) return 1.0/60;
-    if (score>5) return 1.0/50;
+    if (score>5) return 1.0/300;
+    if (score>4) return 1.0/200;
+    if (score>3) return 1.0/100.0;
+    if (score>2) return 1.0/80;
+    if (score>1) return 1.0/60;
+    if (score>0) return 1.0/50;
     return 1.0/40;
 }
 
@@ -200,7 +201,8 @@ static GameLayer* layer=nil;
 {
     if (self.isPause) return;
     
-    [self performSelector:@selector(updateSnake) withObject:self afterDelay:[self getDelayTime]];
+  //  [self scheduleOnce:@selector(updateSnake) delay:[self getDelayTime]];
+  //  [self performSelector:@selector(updateSnake) withObject:self afterDelay:[self getDelayTime]];
     
     if ([self isCollision])
     {
@@ -266,8 +268,8 @@ static GameLayer* layer=nil;
 {
     [[SimpleAudioEngine sharedEngine] playBackEffect];
     CCScene* scene=[StartLayer node];
-    [[CCDirector sharedDirector] resume];       //why ccdirectior pause will be back i don't know?
     
+    //why ccdirectior pause will be back i don't know?
     [[CCDirector sharedDirector] pause];
     [[CCDirector sharedDirector] resume];
     

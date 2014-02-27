@@ -87,7 +87,8 @@
     {
         
         [[UserData sharedUserData] setEvaluate:kNever];
-        NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"813629612"];
+        NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"20140226"];
+       // NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"813629612"];     //debug brain id
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }
 }
@@ -129,12 +130,29 @@
     [self addChild:recordLable];
     
     int score=[[UserData sharedUserData] getThisTimeScore];
-    
     if ([[UserData sharedUserData] isNewRecord:score inModel:model])
     {
         [[UserData sharedUserData] setNewRecord:score inModel:model];
-    }
+        
+        
+        CCSprite* newRecord=[CCSprite spriteWithFile:@"newrecord.png"];
+        if ([[UIDevice currentDevice] userInterfaceIdiom]==UIUserInterfaceIdiomPad)
+        {
+            newRecord.position=ccp(800,620);
+        }
+        else if (winSize.width==480)
+        {
+            newRecord.position=ccp(345,250);
 
+        }
+        else
+        {
+            newRecord.position=ccp(410,250);
+        }
+        newRecord.scale=4;
+        [newRecord runAction:[CCScaleTo actionWithDuration:0.2 scale:1]];
+        [self addChild:newRecord];
+    }
 }
 
 -(void) addBack

@@ -50,10 +50,19 @@
 	return scene;
 }
 
+-(void) preloadSound
+{
+    [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"background.mp3"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"eat.wav"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"button.wav"];
+    [[SimpleAudioEngine sharedEngine] preloadEffect:@"back.wav"];
+}
+
 -(instancetype) init
 {
     if (self=[super init])
     {
+        [self preloadSound];
         isTouchEnable=YES;
         winSize=[[CCDirector sharedDirector] winSize];
         [self addBg];
@@ -481,7 +490,7 @@
 -(void) onEnter
 {
     [super onEnter];
-        
+    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
     [[SimpleAudioEngine sharedEngine] playBgm];
 }
 

@@ -34,27 +34,21 @@
 	return scene;
 }
 
--(void) preloadSound
-{
-    [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"background.mp3"];
-    [[SimpleAudioEngine sharedEngine] preloadEffect:@"eat.wav"];
-    [[SimpleAudioEngine sharedEngine] preloadEffect:@"button.wav"];
-    [[SimpleAudioEngine sharedEngine] preloadEffect:@"back.wav"];
-}
+
 
 // 
 -(id) init
 {
 	if( (self=[super init])) {
 
-		// ask director for the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-
-		CCSprite *background=[CCSprite spriteWithFile:@"beginBackground.png"];
-		background.position = ccp(size.width/2, size.height/2);
-
-		// add the label as a child to this Layer
-		[self addChild: background];
+//		// ask director for the window size
+//		CGSize size = [[CCDirector sharedDirector] winSize];
+//
+//		CCSprite *background=[CCSprite spriteWithFile:@"beginBackground.png"];
+//		background.position = ccp(size.width/2, size.height/2);
+//
+//		// add the label as a child to this Layer
+//		[self addChild: background];
 	}
 	
 	return self;
@@ -65,7 +59,7 @@
 	[super onEnter];
   
     [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
-    
-	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[StartLayer scene] ]];
+   // [[CCDirector sharedDirector] replaceScene:[StartLayer scene]];
+	//[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.1 scene:[StartLayer scene] ]];
 }
 @end

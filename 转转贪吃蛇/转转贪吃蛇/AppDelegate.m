@@ -13,6 +13,7 @@
 #import "GameLayer.h"
 #import "LocalNotification.h"
 #import "UserData.h"
+#import "StartLayer.h"
 #import "GameKitHelper.h"
 
 @implementation MyNavigationController
@@ -36,7 +37,10 @@
 {
 	// iPhone only
 	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    {
+        return UIInterfaceOrientationLandscapeLeft;
+    }
+		//return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 	
 	// iPad only
 	// iPhone only
@@ -51,7 +55,7 @@
 	if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-		[director runWithScene: [IntroLayer scene]];
+		[director runWithScene: [StartLayer scene]];
 	}
 }
 @end
@@ -64,6 +68,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Create the main window
+    [NewRelicAgent startWithApplicationToken:@"AA6ff62667e7bdb93b7f26872a76a2b9e94ed8e82c"];
 
     [[UserData sharedUserData] setDefaultSetting];
     [[LocalNotification sharedLoaclNotification] cancelNotifation];
@@ -165,7 +170,6 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-    
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
 	if( [navController_ visibleViewController] == director_)
     {

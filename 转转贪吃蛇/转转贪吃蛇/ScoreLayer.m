@@ -80,7 +80,7 @@
     {
         if (winSize.width==480.0)
         {
-            scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+30);
+            scoreLabel.position=ccp(winSize.width/2+50,winSize.height/2+45);
         }
         else
         {

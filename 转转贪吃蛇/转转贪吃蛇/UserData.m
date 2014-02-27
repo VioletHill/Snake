@@ -98,12 +98,32 @@ static UserData* userData=nil;
 
 -(void) setEvaluate:(Evaluate)evaluate
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@((int)evaluate) forKey:@"Evaluate"];
+    if (evaluate==kNextTime)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:@"Evaluate"];
+    }
+    else
+    {
+      [[NSUserDefaults standardUserDefaults] setObject:@(-1) forKey:@"Evaluate"];
+    }
+}
+
+-(int) getPlayGameTime
+{
+    int times=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Evaluate"] intValue];
+    if (times>=0)
+    {
+        times++;
+        [[NSUserDefaults standardUserDefaults] setObject:@(times) forKey:@"Evaluate"];
+    }
+    return times;
 }
 
 -(Evaluate) getEvaluteType
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"Evaluate"];
+    int times=[self getPlayGameTime];
+    if (times<10) return kNever;
+    else return kNextTime;
 }
 
 -(void) setDefaultSetting

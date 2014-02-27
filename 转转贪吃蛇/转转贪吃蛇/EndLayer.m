@@ -87,7 +87,7 @@
     {
         
         [[UserData sharedUserData] setEvaluate:kNever];
-        NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"20140226"];
+        NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",@"828815846"];
        // NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"813629612"];     //debug brain id
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }

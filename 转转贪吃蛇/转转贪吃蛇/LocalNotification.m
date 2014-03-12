@@ -72,6 +72,9 @@ static LocalNotification* _localNotification=nil;
 -(void) cancelNotifation
 {
     UIApplication *app = [UIApplication sharedApplication];
+    
+    app.applicationIconBadgeNumber=0;
+    
     //获取本地推送数组
     NSArray *localArray = [app scheduledLocalNotifications];
     //声明本地通知对象

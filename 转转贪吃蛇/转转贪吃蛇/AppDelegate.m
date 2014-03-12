@@ -186,7 +186,6 @@
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-    application.applicationIconBadgeNumber=0;
     [[LocalNotification sharedLoaclNotification] cancelNotifation];
 	if( [navController_ visibleViewController] == director_)
     {
@@ -215,7 +214,8 @@
 
 -(void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    application.applicationIconBadgeNumber=0;
+    [[LocalNotification sharedLoaclNotification] cancelNotifation];
+   // application.applicationIconBadgeNumber=0;
 }
 
 - (void) dealloc

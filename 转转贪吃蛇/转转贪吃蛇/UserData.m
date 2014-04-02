@@ -89,11 +89,15 @@ static UserData* userData=nil;
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying]) return;
         else [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background.mp3" loop:YES];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 -(void) setIsNeedEffect:(BOOL)is
 {
     [[NSUserDefaults standardUserDefaults] setBool:is forKey:@"isNeedEffect"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 -(void) setEvaluate:(Evaluate)evaluate
@@ -106,6 +110,8 @@ static UserData* userData=nil;
     {
       [[NSUserDefaults standardUserDefaults] setObject:@(-1) forKey:@"Evaluate"];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 -(int) getPlayGameTime
@@ -116,6 +122,7 @@ static UserData* userData=nil;
         times++;
         [[NSUserDefaults standardUserDefaults] setObject:@(times) forKey:@"Evaluate"];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return times;
 }
 
@@ -136,6 +143,7 @@ static UserData* userData=nil;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isFirstLaunch"];
         [self setEvaluate:kNextTime];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
